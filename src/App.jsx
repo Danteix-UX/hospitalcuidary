@@ -766,6 +766,15 @@ function CoverageBenefit({ category, procedure, plan }) {
   );
 }
 
+function ComparisonValue({ benefit }) {
+  return (
+    <span className={`comparison-value ${benefit.tone}`}>
+      {benefit.tone === "included" && <b aria-hidden="true">✓</b>}
+      {benefit.text}
+    </span>
+  );
+}
+
 function PlanComparison() {
   const comparisonPlans = [plans[0], plans[2], plans[1]];
 
@@ -810,38 +819,40 @@ function PlanComparison() {
                   const benefit = row.values[plan.shortName];
                   return (
                     <td className={plan.featured ? "featured" : ""} key={plan.shortName}>
-                      <span className={`comparison-value ${benefit.tone}`}>
-                        {benefit.tone === "included" && <b aria-hidden="true">✓</b>}
-                        {benefit.text}
-                      </span>
+                      <ComparisonValue benefit={benefit} />
                     </td>
                   );
                 })}
               </tr>
             ))}
           </tbody>
-          <tfoot>
-            <tr>
-              <th scope="row">Quero contratar</th>
-              {comparisonPlans.map((plan) => (
-                <td className={plan.featured ? "featured" : ""} key={plan.shortName}>
-                  <a
-                    href={buildWhatsAppUrl(
-                      `Olá, quero saber mais informações sobre o ${plan.name}.`,
-                    )}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Escolher {plan.shortName}
-                    <FaWhatsapp aria-hidden="true" />
-                  </a>
-                </td>
-              ))}
-            </tr>
-          </tfoot>
         </table>
       </div>
-      <small className="comparison-mobile-hint">Deslize para o lado para comparar todos os planos.</small>
+
+      <div className="plan-comparison-mobile" aria-label="Comparação dos planos">
+        {comparisonPlans.map((plan) => (
+          <article className={plan.featured ? "featured" : ""} key={plan.shortName}>
+            <header>
+              <div>
+                {plan.featured && <span>Mais completo</span>}
+                <h3>Plano {plan.shortName}</h3>
+              </div>
+              <strong>
+                {plan.featured && <small>a partir de</small>}
+                R$ {plan.monthly}<em>/mês</em>
+              </strong>
+            </header>
+            <ul>
+              {planComparisonRows.slice(1).map((row) => (
+                <li key={row.label}>
+                  <span>{row.label}</span>
+                  <ComparisonValue benefit={row.values[plan.shortName]} />
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
     </section>
   );
 }
