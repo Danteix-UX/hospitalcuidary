@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import {
   FaBuilding,
+  FaBath,
+  FaCalendarCheck,
+  FaCut,
   FaFacebookF,
   FaInstagram,
   FaMapMarkerAlt,
@@ -260,7 +263,7 @@ function Header() {
         <a href="#estrutura" onClick={() => setOpen(false)}>Estrutura</a>
         <a href="#servicos" onClick={() => setOpen(false)}>Serviços</a>
         <a href="#especialidades" onClick={() => setOpen(false)}>Especialidades</a>
-        <a href="#cuidaryclub" onClick={() => setOpen(false)}>Pet Club</a>
+        <a href="#planos" onClick={() => setOpen(false)}>Pet Club</a>
       </nav>
       <a className="client-button" href="#cuidaryclub">Área do cliente</a>
       <button
@@ -491,7 +494,11 @@ function PlanCard({ plan, billing }) {
           );
         })}
       </ul>
-      <a className="coverage-link" href="#cobertura">
+      <a
+        className="coverage-link"
+        href={`#cobertura?plano=${plan.shortName.toLowerCase()}`}
+        aria-label={`Conferir cobertura do ${plan.name}`}
+      >
         Conferir Cobertura
         <span aria-hidden="true">↗</span>
       </a>
@@ -540,7 +547,7 @@ function Club() {
         </div>
       </div>
 
-      <div className="container plan-grid">
+      <div className="container plan-grid" id="planos">
         {plans.map((plan) => (
           <PlanCard key={plan.name} plan={plan} billing={billing} />
         ))}
@@ -676,8 +683,8 @@ function CoverageBenefit({ category, procedure, plan }) {
   );
 }
 
-function CoveragePage() {
-  const [selectedPlanName, setSelectedPlanName] = useState("Premium");
+function CoveragePage({ initialPlanName = "Premium" }) {
+  const [selectedPlanName, setSelectedPlanName] = useState(initialPlanName);
   const [selectedSizeId, setSelectedSizeId] = useState("small");
   const [search, setSearch] = useState("");
   const selectedPlan =
@@ -709,6 +716,19 @@ function CoveragePage() {
       ? `Olá, quero saber mais sobre o Plano Premium para um pet de porte ${selectedSize.label.toLowerCase()}.`
       : `Olá, quero saber mais sobre o ${selectedPlan.name}.`;
 
+  useEffect(() => {
+    setSelectedPlanName(initialPlanName);
+  }, [initialPlanName]);
+
+  const selectPlan = (planName) => {
+    setSelectedPlanName(planName);
+    window.history.replaceState(
+      null,
+      "",
+      `#cobertura?plano=${planName.toLowerCase()}`,
+    );
+  };
+
   return (
     <>
       <section className="coverage-hero" id="cobertura">
@@ -724,7 +744,7 @@ function CoveragePage() {
 
       <main className="coverage-main" id="cobertura-detalhes">
         <section className="coverage-intro container">
-          <a className="coverage-back" href="#cuidaryclub">← Voltar para os planos</a>
+          <a className="coverage-back" href="#planos">← Voltar para os planos</a>
           <div className="coverage-heading">
             <div>
               <p className="eyebrow">Cobertura Pet Club</p>
@@ -745,7 +765,7 @@ function CoveragePage() {
                   type="button"
                   role="tab"
                   aria-selected={selectedPlan.shortName === plan.shortName}
-                  onClick={() => setSelectedPlanName(plan.shortName)}
+                  onClick={() => selectPlan(plan.shortName)}
                 >
                   <span>Plano</span>
                   {plan.shortName}
@@ -792,25 +812,35 @@ function CoveragePage() {
                 <div className="pet-size-options" role="radiogroup" aria-label="Porte do pet">
                   {premiumSizeOptions.map((size) => (
                     <button
-                      className={selectedSize.id === size.id ? "active" : ""}
+                      className={`${size.id}${selectedSize.id === size.id ? " active" : ""}`}
                       key={size.id}
                       type="button"
                       role="radio"
                       aria-checked={selectedSize.id === size.id}
                       onClick={() => setSelectedSizeId(size.id)}
                     >
-                      <span className={`pet-size-icon ${size.id}`} aria-hidden="true">●</span>
-                      <strong>{size.label}</strong>
-                      <small>{size.hint}</small>
-                      <b>R$ {size.monthly}/mês</b>
+                      <span className="pet-size-copy">
+                        <strong>{size.label}</strong>
+                        <small>{size.hint}</small>
+                        <b>R$ {size.monthly}/mês</b>
+                      </span>
+                      <span className="pet-size-image" aria-hidden="true">
+                        <img src={`${ASSET}/${size.image}`} alt="" />
+                      </span>
+                      <span className="pet-size-selected" aria-hidden="true">✓</span>
                     </button>
                   ))}
                 </div>
                 <div className="premium-package-note">
-                  <strong>Seu pacote de estética</strong>
-                  <span>4 banhos em até 1 mês</span>
-                  <span>1 tosa</span>
-                  <span>4 utilizações no período</span>
+                  <strong className="premium-package-title">
+                    <img src={`${ASSET}/brand-heart.svg`} alt="" />
+                    Seu pacote de estética
+                  </strong>
+                  <div className="premium-package-benefits">
+                    <span><FaBath aria-hidden="true" />4 banhos em até 1 mês</span>
+                    <span><FaCut aria-hidden="true" />1 tosa</span>
+                    <span><FaCalendarCheck aria-hidden="true" />4 utilizações no período</span>
+                  </div>
                 </div>
               </div>
             ) : (
@@ -1006,7 +1036,7 @@ function Footer() {
     ["Serviços", "#servicos"],
     ["Equipe", "#equipe"],
     ["Especialidades", "#especialidades"],
-    ["Planos Pet Club", "#cuidaryclub"],
+    ["Planos Pet Club", "#planos"],
     ["Cobertura dos planos", "#cobertura"],
     ["Depoimentos", "#depoimentos"],
     ["Dúvidas e contato", "#contato"],
@@ -1106,7 +1136,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const targetId = route.replace("#", "");
+    const targetId = route.replace("#", "").split("?")[0];
     const frame = window.requestAnimationFrame(() => {
       document.getElementById(targetId)?.scrollIntoView({ block: "start" });
     });
@@ -1114,9 +1144,13 @@ export default function App() {
   }, [route]);
 
   if (route.startsWith("#cobertura")) {
+    const planParam = new URLSearchParams(route.split("?")[1] || "").get("plano");
+    const initialPlanName =
+      plans.find((plan) => plan.shortName.toLowerCase() === planParam)?.shortName ||
+      "Premium";
     return (
       <>
-        <CoveragePage />
+        <CoveragePage initialPlanName={initialPlanName} />
         <FloatingWhatsApp />
       </>
     );
