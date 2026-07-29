@@ -141,6 +141,89 @@ const plans = [
   },
 ];
 
+const planComparisonRows = [
+  {
+    label: "Mensalidade",
+    values: {
+      Basic: { text: "R$ 37/mês", tone: "price" },
+      Essencial: { text: "R$ 57/mês", tone: "price" },
+      Premium: { text: "A partir de R$ 217/mês", tone: "price" },
+    },
+  },
+  {
+    label: "Consultas generalistas",
+    values: {
+      Basic: { text: "4 inclusas", tone: "included" },
+      Essencial: { text: "4 inclusas", tone: "included" },
+      Premium: { text: "4 inclusas", tone: "included" },
+    },
+  },
+  {
+    label: "Urgência e emergência 24h",
+    values: {
+      Basic: { text: "Incluso", tone: "included" },
+      Essencial: { text: "Incluso", tone: "included" },
+      Premium: { text: "Incluso", tone: "included" },
+    },
+  },
+  {
+    label: "Vacinas V10, Raiva e Quíntupla",
+    values: {
+      Basic: { text: "3 inclusas", tone: "included" },
+      Essencial: { text: "3 inclusas", tone: "included" },
+      Premium: { text: "3 inclusas", tone: "included" },
+    },
+  },
+  {
+    label: "Desconto nos demais procedimentos",
+    values: {
+      Basic: { text: "10% OFF", tone: "discount" },
+      Essencial: { text: "15% OFF", tone: "discount" },
+      Premium: { text: "20% OFF", tone: "discount" },
+    },
+  },
+  {
+    label: "Telemedicina 24h",
+    values: {
+      Basic: { text: "10% OFF", tone: "discount" },
+      Essencial: { text: "15% OFF", tone: "discount" },
+      Premium: { text: "Incluso", tone: "included" },
+    },
+  },
+  {
+    label: "Castração",
+    values: {
+      Basic: { text: "10% OFF", tone: "discount" },
+      Essencial: { text: "15% OFF", tone: "discount" },
+      Premium: { text: "Incluso", tone: "included" },
+    },
+  },
+  {
+    label: "Banho e tosa",
+    values: {
+      Basic: { text: "10% OFF", tone: "discount" },
+      Essencial: { text: "15% OFF", tone: "discount" },
+      Premium: { text: "4 banhos + 1 tosa/mês", tone: "premium" },
+    },
+  },
+  {
+    label: "Pet Sitter",
+    values: {
+      Basic: { text: "10% OFF", tone: "discount" },
+      Essencial: { text: "15% OFF", tone: "discount" },
+      Premium: { text: "20% OFF", tone: "discount" },
+    },
+  },
+  {
+    label: "Hospedagem",
+    values: {
+      Basic: { text: "Indisponível", tone: "unavailable" },
+      Essencial: { text: "Indisponível", tone: "unavailable" },
+      Premium: { text: "Indisponível", tone: "unavailable" },
+    },
+  },
+];
+
 const testimonials = [
   {
     image: "testimonial-01.png",
@@ -683,6 +766,86 @@ function CoverageBenefit({ category, procedure, plan }) {
   );
 }
 
+function PlanComparison() {
+  const comparisonPlans = [plans[0], plans[2], plans[1]];
+
+  return (
+    <section className="plan-comparison" aria-labelledby="plan-comparison-title">
+      <div className="plan-comparison-heading">
+        <div>
+          <p className="eyebrow">Compare antes de escolher</p>
+          <h2 id="plan-comparison-title">Qual Pet Club combina com seu pet?</h2>
+        </div>
+        <p>
+          Veja lado a lado os principais benefícios. Os serviços com desconto podem
+          ser usados sem carência.
+        </p>
+      </div>
+
+      <div className="plan-comparison-scroll" tabIndex="0" aria-label="Tabela comparativa dos planos">
+        <table className="plan-comparison-table">
+          <thead>
+            <tr>
+              <th scope="col">Benefício</th>
+              {comparisonPlans.map((plan) => (
+                <th
+                  className={plan.featured ? "featured" : ""}
+                  key={plan.shortName}
+                  scope="col"
+                >
+                  {plan.featured && <span>Mais completo</span>}
+                  <strong>{plan.shortName}</strong>
+                  <small>
+                    {plan.featured ? "a partir de " : ""}R$ {plan.monthly}/mês
+                  </small>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {planComparisonRows.map((row) => (
+              <tr key={row.label}>
+                <th scope="row">{row.label}</th>
+                {comparisonPlans.map((plan) => {
+                  const benefit = row.values[plan.shortName];
+                  return (
+                    <td className={plan.featured ? "featured" : ""} key={plan.shortName}>
+                      <span className={`comparison-value ${benefit.tone}`}>
+                        {benefit.tone === "included" && <b aria-hidden="true">✓</b>}
+                        {benefit.text}
+                      </span>
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row">Quero contratar</th>
+              {comparisonPlans.map((plan) => (
+                <td className={plan.featured ? "featured" : ""} key={plan.shortName}>
+                  <a
+                    href={buildWhatsAppUrl(
+                      `Olá, quero saber mais informações sobre o ${plan.name}.`,
+                    )}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Escolher {plan.shortName}
+                    <FaWhatsapp aria-hidden="true" />
+                  </a>
+                </td>
+              ))}
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <small className="comparison-mobile-hint">Deslize para o lado para comparar todos os planos.</small>
+    </section>
+  );
+}
+
 function CoveragePage({ initialPlanName = "Premium" }) {
   const [selectedPlanName, setSelectedPlanName] = useState(initialPlanName);
   const [selectedSizeId, setSelectedSizeId] = useState("small");
@@ -968,6 +1131,7 @@ function CoveragePage({ initialPlanName = "Premium" }) {
               no regulamento do Pet Club no momento da contratação.
             </p>
           </div>
+          <PlanComparison />
         </section>
       </main>
       <Footer />
