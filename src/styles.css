@@ -472,7 +472,7 @@ p {
 .care-banner {
   position: relative;
   min-height: 771px;
-  background: url("/assets/care-banner.png") center / cover no-repeat;
+  background: url("/assets/care-banner-cat.png") center / cover no-repeat;
 }
 
 .care-banner-inner {
@@ -1812,7 +1812,7 @@ p {
   }
 
   .care-banner {
-    background-position: 57% center;
+    background-position: 78% center;
   }
 
   .care-card {

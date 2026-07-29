@@ -464,14 +464,14 @@ function Services() {
 
 function CareBanner() {
   return (
-    <section className="care-banner" aria-label="Capacidade de cuidado">
+    <section className="care-banner" aria-label="Consultório exclusivo para gatos">
       <div className="container care-banner-inner">
         <article className="care-card">
           <img className="care-mark" src={`${ASSET}/mark.png`} alt="" />
-          <h2>Capacidade de cuidar em cada necessidade</h2>
+          <h2>Consultório exclusivo para gatos</h2>
           <p>
-            Cada atendimento é conduzido de forma individualizada, considerando o
-            histórico, os sinais clínicos e as necessidades específicas de cada paciente.
+            Separar gatos de cães reduz cheiros, sons e contato visual que podem causar
+            estresse, deixando a avaliação mais tranquila, segura e precisa.
           </p>
           <Button>Agendar uma consulta</Button>
         </article>
