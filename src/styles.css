@@ -886,6 +886,10 @@ p {
   line-height: 0.82;
 }
 
+.donation-mobile-message {
+  display: none;
+}
+
 .donation-kicker {
   margin-bottom: 6px;
   font-size: 23px;
@@ -1784,6 +1788,33 @@ p {
     width: 78vw;
     min-width: 78vw;
     border-radius: 24px;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+
+  .auto-carousel {
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-behavior: smooth;
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: none;
+    touch-action: pan-x;
+  }
+
+  .auto-carousel::-webkit-scrollbar,
+  .team-carousel::-webkit-scrollbar,
+  .plan-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery-track,
+  .testimonial-track {
+    animation: none;
+  }
+
+  .gallery-card[aria-hidden="true"],
+  .testimonial-card[aria-hidden="true"] {
+    display: none;
   }
 
   .services {
@@ -1849,26 +1880,31 @@ p {
     margin-right: 0;
     padding-bottom: 0;
     gap: 5px;
-    animation: team-slide 30s linear infinite;
+    animation: none;
     scroll-snap-type: none;
   }
 
   .team-carousel {
     width: calc(100% + 16px);
-    overflow: hidden;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-behavior: smooth;
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: none;
+    touch-action: pan-x;
   }
 
-  .team-carousel:hover .team-cards {
-    animation-play-state: paused;
-  }
-
-  .team-card,
-  .team-card-duplicate {
+  .team-card {
     display: block;
     width: 80vw;
     min-width: 80vw;
     flex: 0 0 80vw;
-    scroll-snap-align: none;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+
+  .team-card-duplicate {
+    display: none;
   }
 
   .club-section {
@@ -1915,9 +1951,13 @@ p {
   .plan-grid {
     display: flex;
     overflow-x: auto;
+    overscroll-behavior-inline: contain;
     margin-top: 60px;
     padding-bottom: 20px;
+    scroll-behavior: smooth;
     scroll-snap-type: inline mandatory;
+    scrollbar-width: none;
+    touch-action: pan-x;
   }
 
   .plan-card {
@@ -1925,6 +1965,7 @@ p {
     min-width: 88vw;
     min-height: 790px;
     scroll-snap-align: center;
+    scroll-snap-stop: always;
   }
 
   .plan-card.featured {
@@ -1933,41 +1974,75 @@ p {
 
   .donation {
     min-height: auto;
+    align-items: center;
+    gap: 26px;
     margin-top: 48px;
-    padding: 30px 24px;
+    padding: 30px 20px 26px;
+    border-radius: 28px;
+    text-align: center;
   }
 
   .donation-message {
+    display: none;
+  }
+
+  .donation-mobile-message {
+    display: flex;
     width: 100%;
-    line-height: 0.86;
+    align-items: center;
+    flex-direction: column;
+    color: #1c1532;
   }
 
-  .donation-kicker {
-    font-size: clamp(17px, 5vw, 23px);
+  .donation-mobile-message > span {
+    margin-bottom: 10px;
+    color: var(--muted);
+    font-size: 15px;
   }
 
-  .donation-line-orange strong {
-    font-size: clamp(23px, 7.3vw, 48px);
+  .donation-mobile-message > div {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
   }
 
-  .donation-message .animal-inline {
-    width: clamp(58px, 19vw, 92px);
-    height: clamp(34px, 10vw, 50px);
-    margin-inline: 4px;
+  .donation-mobile-message .animal-inline {
+    width: clamp(58px, 18vw, 76px);
+    height: clamp(36px, 11vw, 46px);
+    margin: 0;
   }
 
-  .donation-line-food {
-    gap: 5px;
-    font-size: clamp(19px, 6vw, 29px);
+  .donation-mobile-message strong {
+    color: var(--brand);
+    font-size: clamp(28px, 9vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.06em;
+    line-height: 1;
+    white-space: nowrap;
   }
 
-  .donation-line-food b {
-    font-size: clamp(58px, 20vw, 90px);
+  .donation-mobile-message p {
+    margin: 9px 0 0;
+    color: #1c1532;
+    font-size: 17px;
+    line-height: 1.25;
   }
 
-  .donation-message .donation-cat {
-    width: clamp(54px, 17vw, 82px);
-    margin-inline: 0;
+  .donation-action {
+    align-items: center;
+    gap: 14px;
+  }
+
+  .donation-action a {
+    width: 100%;
+    padding: 20px 18px;
+    font-size: 17px;
+  }
+
+  .donation-action small {
+    font-size: 10px;
   }
 
   .testimonials {
@@ -1983,6 +2058,8 @@ p {
     min-width: 82vw;
     height: auto;
     aspect-ratio: 400 / 620;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
   }
 
   .faq-section {
@@ -2071,16 +2148,6 @@ p {
 
 .plan-card.featured .coverage-link {
   color: white;
-}
-
-.plan-card .coverage-link span {
-  font-size: 16px;
-  text-decoration: none;
-  transition: transform 180ms ease;
-}
-
-.plan-card .coverage-link:hover span {
-  transform: translate(2px, -2px);
 }
 
 .coverage-hero {

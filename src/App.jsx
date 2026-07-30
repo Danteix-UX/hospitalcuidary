@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   FaBuilding,
   FaBath,
@@ -292,12 +292,102 @@ function PetPill({ image, className = "" }) {
   );
 }
 
+function useMobileCarousel(selector, interval = 4400) {
+  const carouselRef = useRef(null);
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    const mobileQuery = window.matchMedia("(max-width: 760px)");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let intervalId;
+    let resumeTimeout;
+    let interacting = false;
+
+    if (!carousel) return undefined;
+
+    const getItems = () =>
+      [...carousel.querySelectorAll(selector)]
+        .filter((item) => window.getComputedStyle(item).display !== "none")
+        .sort((first, second) => first.offsetLeft - second.offsetLeft);
+
+    const advance = () => {
+      if (!mobileQuery.matches || interacting) return;
+      const items = getItems();
+      if (items.length < 2) return;
+
+      const carouselCenter = carousel.scrollLeft + carousel.clientWidth / 2;
+      const currentIndex = items.reduce((nearestIndex, item, index) => {
+        const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+        const nearest = items[nearestIndex];
+        const nearestCenter = nearest.offsetLeft + nearest.offsetWidth / 2;
+        return Math.abs(itemCenter - carouselCenter) <
+          Math.abs(nearestCenter - carouselCenter)
+          ? index
+          : nearestIndex;
+      }, 0);
+      const nextItem = items[(currentIndex + 1) % items.length];
+      const nextLeft = Math.max(
+        0,
+        nextItem.offsetLeft - (carousel.clientWidth - nextItem.offsetWidth) / 2,
+      );
+
+      carousel.scrollTo({
+        left: nextLeft,
+        behavior: reduceMotion.matches ? "auto" : "smooth",
+      });
+    };
+
+    const start = () => {
+      window.clearInterval(intervalId);
+      if (mobileQuery.matches) {
+        intervalId = window.setInterval(advance, interval);
+      }
+    };
+
+    const pause = () => {
+      interacting = true;
+      window.clearInterval(intervalId);
+      window.clearTimeout(resumeTimeout);
+    };
+
+    const resume = () => {
+      window.clearTimeout(resumeTimeout);
+      resumeTimeout = window.setTimeout(() => {
+        interacting = false;
+        start();
+      }, 1800);
+    };
+
+    carousel.addEventListener("pointerdown", pause);
+    window.addEventListener("pointerup", resume);
+    window.addEventListener("pointercancel", resume);
+    mobileQuery.addEventListener("change", start);
+    start();
+
+    return () => {
+      window.clearInterval(intervalId);
+      window.clearTimeout(resumeTimeout);
+      carousel.removeEventListener("pointerdown", pause);
+      window.removeEventListener("pointerup", resume);
+      window.removeEventListener("pointercancel", resume);
+      mobileQuery.removeEventListener("change", start);
+    };
+  }, [interval, selector]);
+
+  return carouselRef;
+}
+
 function AutoCarousel({ items, type, label }) {
   const isGallery = type === "gallery";
   const repeatedItems = [...items, ...items];
+  const carouselRef = useMobileCarousel(`.${type}-card:not([aria-hidden="true"])`);
 
   return (
-    <div className={`auto-carousel ${type}-carousel`} aria-label={label}>
+    <div
+      className={`auto-carousel ${type}-carousel`}
+      ref={carouselRef}
+      aria-label={label}
+    >
       <div className={`${type}-track`}>
         {repeatedItems.map((item, index) => {
           const duplicate = index >= items.length;
@@ -481,6 +571,11 @@ function CareBanner() {
 }
 
 function Team() {
+  const teamCarouselRef = useMobileCarousel(
+    '.team-card:not([aria-hidden="true"])',
+    4600,
+  );
+
   return (
     <section className="team-section" id="equipe">
       <div className="container team-grid">
@@ -495,7 +590,7 @@ function Team() {
           </h2>
           <Button>Agendar uma consulta</Button>
         </div>
-        <div className="team-carousel">
+        <div className="team-carousel" ref={teamCarouselRef}>
           <div className="team-cards">
             {[...team, ...team].map((member, index) => {
               const duplicate = index >= team.length;
@@ -583,7 +678,6 @@ function PlanCard({ plan, billing }) {
         aria-label={`Conferir cobertura do ${plan.name}`}
       >
         Conferir Cobertura
-        <span aria-hidden="true">↗</span>
       </a>
     </article>
   );
@@ -591,6 +685,7 @@ function PlanCard({ plan, billing }) {
 
 function Club() {
   const [billing, setBilling] = useState("monthly");
+  const planCarouselRef = useMobileCarousel(".plan-card", 5200);
 
   return (
     <section className="club-section" id="especialidades">
@@ -630,7 +725,7 @@ function Club() {
         </div>
       </div>
 
-      <div className="container plan-grid" id="planos">
+      <div className="container plan-grid" id="planos" ref={planCarouselRef}>
         {plans.map((plan) => (
           <PlanCard key={plan.name} plan={plan} billing={billing} />
         ))}
@@ -638,7 +733,7 @@ function Club() {
 
       <div className="container donation">
         <div className="donation-message">
-          <span className="donation-kicker">Há cada plano</span>
+          <span className="donation-kicker">A cada plano</span>
           <span className="donation-line donation-line-orange">
             <strong>contratado</strong>
             <PetPill image="pet-pill-dog.png" className="donation-dog" />
@@ -650,6 +745,15 @@ function Club() {
             <PetPill image="pet-pill-cat.png" className="donation-cat" />
             <span>para protetores</span>
           </span>
+        </div>
+        <div className="donation-mobile-message">
+          <span>A cada plano contratado</span>
+          <div>
+            <PetPill image="pet-pill-dog.png" />
+            <strong>Doamos 1KG</strong>
+            <PetPill image="pet-pill-cat.png" />
+          </div>
+          <p>de ração para protetores animais</p>
         </div>
         <div className="donation-action">
           <a href={PETCLUB_DONATION_URL} target="_blank" rel="noreferrer">
