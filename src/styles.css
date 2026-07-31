@@ -627,22 +627,25 @@ p {
 }
 
 .marquee {
-  display: flex;
-  width: max-content;
+  display: block;
+  width: 100%;
+  overflow: hidden;
   margin-bottom: 20px;
-  animation: marquee 42s linear infinite;
-  transform: translate3d(0, 0, 0);
-  will-change: transform;
-}
-
-.marquee.reverse {
-  animation-direction: reverse;
-  animation-duration: 48s;
+  pointer-events: none;
 }
 
 .marquee-track {
   display: flex;
+  width: max-content;
   gap: 8px;
+  animation: marquee 34s linear infinite;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.marquee.reverse .marquee-track {
+  animation-direction: reverse;
+  animation-duration: 38s;
 }
 
 .marquee span {
@@ -662,8 +665,32 @@ p {
 }
 
 @keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
   to {
     transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .marquee-track {
+    animation-duration: 26s;
+  }
+
+  .marquee.reverse .marquee-track {
+    animation-duration: 30s;
+  }
+}
+
+@media (max-width: 760px) {
+  .marquee-track {
+    animation-duration: 20s;
+  }
+
+  .marquee.reverse .marquee-track {
+    animation-duration: 24s;
   }
 }
 
