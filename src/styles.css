@@ -2699,6 +2699,38 @@ p {
   color: white;
 }
 
+.coverage-waiting.premium-waiting {
+  align-items: stretch;
+  grid-template-columns: 1fr;
+}
+
+.premium-waiting .coverage-waiting-heading {
+  max-width: 760px;
+}
+
+.premium-waiting .coverage-waiting-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.coverage-waiting-grid .castration-waiting-card {
+  color: white;
+  border-color: #3c2b70;
+  background: #3c2b70;
+}
+
+.coverage-waiting-grid .castration-waiting-card span,
+.coverage-waiting-grid .castration-waiting-card strong,
+.coverage-waiting-grid .castration-waiting-card b {
+  color: white;
+}
+
+.coverage-waiting-grid .castration-waiting-card small {
+  margin-top: 8px;
+  color: rgb(255 255 255 / 72%);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
 .coverage-list-heading {
   display: flex;
   align-items: end;
@@ -3533,6 +3565,10 @@ p {
   }
 
   .coverage-waiting-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .premium-waiting .coverage-waiting-grid {
     grid-template-columns: 1fr;
   }
 

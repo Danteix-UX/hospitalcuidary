@@ -196,7 +196,7 @@ const planComparisonRows = [
     values: {
       Basic: { text: "10% OFF", tone: "discount" },
       Essencial: { text: "15% OFF", tone: "discount" },
-      Premium: { text: "Procedimento + anestesia inclusos", tone: "premium" },
+      Premium: { text: "Procedimento + anestesia • 180 dias", tone: "premium" },
     },
   },
   {
@@ -818,14 +818,22 @@ function CoverageBenefit({ category, procedure, plan }) {
     category.id === "consultas" &&
     includedGeneralConsultations.has(procedureName);
   const isUrgencyOrEmergency = category.id === "urgencia-emergencia";
+  const isPremiumCastrationIncluded =
+    plan.shortName === "Premium" &&
+    category.id === "castracao" &&
+    (procedureName === "Procedimento de castração" ||
+      procedureName === "Anestesia da castração");
   const isPlantao =
     isIncludedGeneralConsultation &&
     procedureName.toLowerCase().includes("plantão");
   const included =
     isIncludedVaccine ||
     isIncludedGeneralConsultation ||
-    isUrgencyOrEmergency;
-  const waitingPeriod = isIncludedVaccine
+    isUrgencyOrEmergency ||
+    isPremiumCastrationIncluded;
+  const waitingPeriod = isPremiumCastrationIncluded
+    ? "180 dias"
+    : isIncludedVaccine
     ? "60 dias"
     : isUrgencyOrEmergency || isPlantao
       ? "30 dias"
@@ -1076,7 +1084,8 @@ function CoveragePage({ initialPlanName = "Premium" }) {
                   <p>
                     Quatro consultas generalistas, urgência, emergência, Raiva, V10 e
                     Quíntupla estão inclusas. Na castração, somente o procedimento e a
-                    anestesia estão inclusos; internação e medicamentos têm 20% de desconto.
+                    anestesia estão inclusos após 180 dias; internação e medicamentos têm
+                    20% de desconto.
                   </p>
                 ) : (
                   <p>
@@ -1159,7 +1168,13 @@ function CoveragePage({ initialPlanName = "Premium" }) {
         </section>
 
         <section className="coverage-details container">
-          <div className="coverage-waiting">
+          <div
+            className={
+              selectedPlan.shortName === "Premium"
+                ? "coverage-waiting premium-waiting"
+                : "coverage-waiting"
+            }
+          >
             <div className="coverage-waiting-heading">
               <p className="eyebrow">Benefícios inclusos</p>
               <h2>Carências simples de entender</h2>
@@ -1181,6 +1196,14 @@ function CoveragePage({ initialPlanName = "Premium" }) {
                 <strong>Raiva, V10 e Quíntupla</strong>
                 <b>60 dias</b>
               </article>
+              {selectedPlan.shortName === "Premium" && (
+                <article className="castration-waiting-card">
+                  <span>04 • PREMIUM</span>
+                  <strong>Castração: procedimento + anestesia inclusos</strong>
+                  <b>180 dias</b>
+                  <small>Internação e medicamentos: 20% OFF</small>
+                </article>
+              )}
             </div>
           </div>
 

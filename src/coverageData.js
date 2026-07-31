@@ -54,6 +54,28 @@ export const coverageCategories = [
     ],
   },
   {
+    id: "castracao",
+    title: "Castração",
+    description: "No Premium, procedimento e anestesia estão inclusos após 180 dias; os demais itens recebem desconto.",
+    procedures: [
+      "Procedimento de castração",
+      "Anestesia da castração",
+      "Internação após a castração",
+      "Medicamentos utilizados na castração",
+    ],
+  },
+  {
+    id: "cirurgias",
+    title: "Cirurgias",
+    description: "Cirurgias e itens relacionados recebem o desconto do plano escolhido.",
+    procedures: [
+      "Cirurgias em geral",
+      "Anestesia para cirurgias em geral",
+      "Internação cirúrgica",
+      "Medicamentos utilizados em cirurgias",
+    ],
+  },
+  {
     id: "exames-simples",
     title: "Exames laboratoriais simples",
     description: "Análises de rotina para prevenção, diagnóstico e acompanhamento.",
