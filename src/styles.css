@@ -638,14 +638,8 @@ p {
   display: flex;
   width: max-content;
   gap: 8px;
-  animation: marquee 34s linear infinite;
   transform: translate3d(0, 0, 0);
   will-change: transform;
-}
-
-.marquee.reverse .marquee-track {
-  animation-direction: reverse;
-  animation-duration: 38s;
 }
 
 .marquee span {
@@ -664,35 +658,6 @@ p {
   white-space: nowrap;
 }
 
-@keyframes marquee {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-@media (max-width: 1024px) {
-  .marquee-track {
-    animation-duration: 26s;
-  }
-
-  .marquee.reverse .marquee-track {
-    animation-duration: 30s;
-  }
-}
-
-@media (max-width: 760px) {
-  .marquee-track {
-    animation-duration: 20s;
-  }
-
-  .marquee.reverse .marquee-track {
-    animation-duration: 24s;
-  }
-}
 
 .club-intro {
   padding-top: 180px;

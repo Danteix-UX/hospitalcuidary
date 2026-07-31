@@ -642,11 +642,72 @@ function Team() {
 
 function Marquee({ reverse = false }) {
   const items = reverse ? [...specialties].reverse() : specialties;
+  const trackRef = useRef(null);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return undefined;
+
+    let animationFrame;
+    let previousTime;
+    let offset = 0;
+    let loopDistance = 0;
+
+    const measure = () => {
+      const duplicateStart = track.children[items.length];
+      loopDistance = duplicateStart?.offsetLeft || track.scrollWidth / 2;
+
+      if (reverse && offset === 0) offset = -loopDistance;
+      if (!reverse && offset <= -loopDistance) offset = 0;
+      if (reverse && offset < -loopDistance) offset = -loopDistance;
+    };
+
+    const animate = (time) => {
+      if (!loopDistance) measure();
+      if (previousTime === undefined) previousTime = time;
+
+      const elapsed = Math.min((time - previousTime) / 1000, 0.05);
+      const viewportWidth = window.innerWidth;
+      const speed = viewportWidth <= 760 ? 82 : viewportWidth <= 1024 ? 66 : 52;
+      offset += (reverse ? 1 : -1) * speed * elapsed;
+
+      if (!reverse && offset <= -loopDistance) offset += loopDistance;
+      if (reverse && offset >= 0) offset -= loopDistance;
+
+      track.style.transform = `translate3d(${offset}px, 0, 0)`;
+      previousTime = time;
+      animationFrame = window.requestAnimationFrame(animate);
+    };
+
+    const resetClock = () => {
+      previousTime = undefined;
+    };
+
+    measure();
+    const resizeObserver = new ResizeObserver(measure);
+    resizeObserver.observe(track);
+    document.addEventListener("visibilitychange", resetClock);
+    window.addEventListener("resize", resetClock);
+    animationFrame = window.requestAnimationFrame(animate);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      resizeObserver.disconnect();
+      document.removeEventListener("visibilitychange", resetClock);
+      window.removeEventListener("resize", resetClock);
+    };
+  }, [reverse, items.length]);
+
   return (
     <div className={reverse ? "marquee reverse" : "marquee"}>
-      <div className="marquee-track">
+      <div className="marquee-track" ref={trackRef}>
         {[...items, ...items].map((item, index) => (
-          <span key={`${item}-${index}`}>{item}</span>
+          <span
+            key={`${item}-${index}`}
+            aria-hidden={index >= items.length ? "true" : undefined}
+          >
+            {item}
+          </span>
         ))}
       </div>
     </div>
