@@ -33,9 +33,14 @@ const WAZE_URL = `https://waze.com/ul?q=${encodeURIComponent(ADDRESS)}&navigate=
 
 const gallery = [
   ["estrutura-consultorio-01.png", "Consultório 01"],
+  ["estrutura-consultorio-02.png", "Consultório 02"],
   ["estrutura-recepcao.png", "Recepção"],
+  ["estrutura-recepcao-02.png", "Recepção 02"],
   ["estrutura-sala-banho.png", "Sala de banho"],
   ["estrutura-corredor.png", "Corredor"],
+  ["estrutura-internacao-01.png", "Internação 01"],
+  ["estrutura-isolamento.png", "Isolamento"],
+  ["estrutura-bloco-cirurgico.png", "Bloco cirúrgico"],
 ];
 
 const services = [

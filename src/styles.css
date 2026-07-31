@@ -631,6 +631,8 @@ p {
   width: max-content;
   margin-bottom: 20px;
   animation: marquee 42s linear infinite;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
 .marquee.reverse {
@@ -661,7 +663,7 @@ p {
 
 @keyframes marquee {
   to {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
@@ -1798,7 +1800,7 @@ p {
     scroll-behavior: smooth;
     scroll-snap-type: inline mandatory;
     scrollbar-width: none;
-    touch-action: pan-x;
+    touch-action: pan-x pan-y;
   }
 
   .auto-carousel::-webkit-scrollbar,
@@ -1891,7 +1893,7 @@ p {
     scroll-behavior: smooth;
     scroll-snap-type: inline mandatory;
     scrollbar-width: none;
-    touch-action: pan-x;
+    touch-action: pan-x pan-y;
   }
 
   .team-card {
@@ -1957,7 +1959,7 @@ p {
     scroll-behavior: smooth;
     scroll-snap-type: inline mandatory;
     scrollbar-width: none;
-    touch-action: pan-x;
+    touch-action: pan-x pan-y;
   }
 
   .plan-card {
