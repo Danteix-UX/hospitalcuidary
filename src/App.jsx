@@ -111,6 +111,7 @@ const planFeatures = [
   "Castração",
   "Banho & Tosa",
   "Pet sitter",
+  "Medicamentos",
 ];
 
 const plans = [
@@ -195,7 +196,23 @@ const planComparisonRows = [
     values: {
       Basic: { text: "10% OFF", tone: "discount" },
       Essencial: { text: "15% OFF", tone: "discount" },
-      Premium: { text: "Incluso", tone: "included" },
+      Premium: { text: "Procedimento + anestesia inclusos", tone: "premium" },
+    },
+  },
+  {
+    label: "Internação",
+    values: {
+      Basic: { text: "10% OFF", tone: "discount" },
+      Essencial: { text: "15% OFF", tone: "discount" },
+      Premium: { text: "20% OFF", tone: "discount" },
+    },
+  },
+  {
+    label: "Medicamentos",
+    values: {
+      Basic: { text: "10% OFF", tone: "discount" },
+      Essencial: { text: "15% OFF", tone: "discount" },
+      Premium: { text: "20% OFF", tone: "discount" },
     },
   },
   {
@@ -661,7 +678,7 @@ function PlanCard({ plan, billing }) {
           if (index === 1) benefit = "Incluso";
           if (index === 2) benefit = "3 vacinas inclusas";
           if (plan.featured && index === 8) benefit = "Incluso";
-          if (plan.featured && index === 9) benefit = "Incluso";
+          if (plan.featured && index === 9) benefit = "Proced. + anestesia";
           if (plan.featured && index === 10) benefit = "4 banhos & 1 Tosa/mês";
           if (plan.featured && index === 11) benefit = "20% OFF";
           return (
@@ -1055,11 +1072,19 @@ function CoveragePage({ initialPlanName = "Premium" }) {
               <div>
                 <span className="coverage-plan-kicker">Você está conferindo</span>
                 <h3>{selectedPlan.name}</h3>
-                <p>
-                  Quatro consultas generalistas, urgência, emergência, Raiva, V10 e
-                  Quíntupla estão inclusas. Especialistas e os demais procedimentos
-                  têm {selectedPlan.procedureDiscount}% de desconto.
-                </p>
+                {selectedPlan.shortName === "Premium" ? (
+                  <p>
+                    Quatro consultas generalistas, urgência, emergência, Raiva, V10 e
+                    Quíntupla estão inclusas. Na castração, somente o procedimento e a
+                    anestesia estão inclusos; internação e medicamentos têm 20% de desconto.
+                  </p>
+                ) : (
+                  <p>
+                    Quatro consultas generalistas, urgência, emergência, Raiva, V10 e
+                    Quíntupla estão inclusas. Especialistas e os demais procedimentos
+                    têm {selectedPlan.procedureDiscount}% de desconto.
+                  </p>
+                )}
               </div>
               <div className="coverage-price">
                 {selectedPlan.shortName === "Premium" && <small>a partir de</small>}
