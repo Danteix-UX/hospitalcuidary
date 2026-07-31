@@ -648,10 +648,10 @@ function Marquee({ reverse = false }) {
     const track = trackRef.current;
     if (!track) return undefined;
 
-    let animationFrame;
     let previousTime;
     let offset = 0;
     let loopDistance = 0;
+    let intervalId;
 
     const measure = () => {
       const duplicateStart = track.children[items.length];
@@ -662,8 +662,9 @@ function Marquee({ reverse = false }) {
       if (reverse && offset < -loopDistance) offset = -loopDistance;
     };
 
-    const animate = (time) => {
+    const animate = () => {
       if (!loopDistance) measure();
+      const time = Date.now();
       if (previousTime === undefined) previousTime = time;
 
       const elapsed = Math.min((time - previousTime) / 1000, 0.05);
@@ -676,7 +677,6 @@ function Marquee({ reverse = false }) {
 
       track.style.transform = `translate3d(${offset}px, 0, 0)`;
       previousTime = time;
-      animationFrame = window.requestAnimationFrame(animate);
     };
 
     const resetClock = () => {
@@ -688,10 +688,11 @@ function Marquee({ reverse = false }) {
     resizeObserver.observe(track);
     document.addEventListener("visibilitychange", resetClock);
     window.addEventListener("resize", resetClock);
-    animationFrame = window.requestAnimationFrame(animate);
+    intervalId = window.setInterval(animate, 20);
+    animate();
 
     return () => {
-      window.cancelAnimationFrame(animationFrame);
+      window.clearInterval(intervalId);
       resizeObserver.disconnect();
       document.removeEventListener("visibilitychange", resetClock);
       window.removeEventListener("resize", resetClock);
