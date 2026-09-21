@@ -978,6 +978,8 @@ function CoverageBenefit({ category, procedure, plan }) {
 }
 
 function ComparisonValue({ benefit }) {
+  if (!benefit) return <span className="comparison-value unavailable">—</span>;
+
   return (
     <span className={`comparison-value ${benefit.tone}`}>
       {benefit.tone === "included" && <b aria-hidden="true">✓</b>}
@@ -987,7 +989,9 @@ function ComparisonValue({ benefit }) {
 }
 
 function PlanComparison() {
-  const comparisonPlans = [plans[0], plans[2], plans[1]];
+  const comparisonPlans = ["Basic", "Essencial", "Premium"]
+    .map((shortName) => plans.find((plan) => plan.shortName === shortName))
+    .filter(Boolean);
 
   return (
     <section className="plan-comparison" aria-labelledby="plan-comparison-title">
