@@ -2261,23 +2261,25 @@ p {
   padding: 12px;
   border-bottom: 1px solid #eee9fb;
   gap: 10px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .coverage-plan-tabs button {
   display: flex;
-  min-height: 72px;
+  min-width: 0;
+  min-height: 68px;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  padding: 14px 20px;
+  gap: 6px;
+  padding: 12px 10px;
   border: 1px solid transparent;
-  border-radius: 23px;
+  border-radius: 21px;
   color: var(--brand-dark);
   background: transparent;
   cursor: pointer;
-  font-size: 19px;
+  font-size: 17px;
   font-weight: 600;
+  white-space: nowrap;
   transition: 180ms ease;
 }
 
@@ -3485,6 +3487,7 @@ p {
   .coverage-plan-tabs {
     gap: 6px;
     padding: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .coverage-plan-tabs button {

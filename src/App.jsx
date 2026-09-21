@@ -4,14 +4,11 @@ import {
   FaBath,
   FaCalendarCheck,
   FaCut,
-  FaFacebookF,
   FaInstagram,
   FaMapMarkerAlt,
   FaShieldAlt,
   FaWhatsapp,
-  FaYoutube,
 } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
 import { SiWaze } from "react-icons/si";
 import { coverageCategories, premiumSizeOptions } from "./coverageData";
 
@@ -28,7 +25,7 @@ const WHATSAPP_URL = buildWhatsAppUrl(
 const PETCLUB_DONATION_URL = buildWhatsAppUrl(
   "Olá, quero contratar o Pet Club e ajudar os pets de ONGs.",
 );
-const GOOGLE_MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ADDRESS)}`;
+const GOOGLE_MAPS_URL = "https://www.google.com/maps/place/Cuidary+-+Hospital+Veterin%C3%A1rio+24+horas/@-20.6744341,-44.0668394,1384m/data=!3m1!1e3!4m6!3m5!1s0xa16ddd87db6107:0xdc00b321d6ce76b0!8m2!3d-20.672873!4d-44.064612!16s%2Fg%2F11nvvbs1vf?hl=pt_BR&entry=ttu&g_ep=EgoyMDI2MDkyMC4wIKXMDSoASAFQAw%3D%3D";
 const WAZE_URL = `https://waze.com/ul?q=${encodeURIComponent(ADDRESS)}&navigate=yes&utm_source=cuidary_site`;
 
 const gallery = [
@@ -1090,6 +1087,12 @@ function CoveragePage({ initialPlanName = "Premium" }) {
       procedures: category.procedures.filter((procedure) => {
         const procedureName = typeof procedure === "string" ? procedure : procedure.name;
         if (selectedPlan.cat && /(Canin|Cinomose|Erliqu|Babes|Dirofil|Leishman|Bordetella|Adenovírus|V10|V7\/V8|Gripe)/i.test(procedureName)) return false;
+        if (selectedPlan.cat && category.id === "servicos" && procedureName === "Limpeza de ouvido") return false;
+        if (
+          selectedPlan.cat &&
+          category.id === "estetica" &&
+          ["Tosa higiênica", "Tosa na tesoura", "Desembolar", "Tosa de patinha", "Tosa na máquina"].includes(procedureName)
+        ) return false;
         const searchable =
           typeof procedure === "string"
             ? procedure
@@ -1408,7 +1411,7 @@ function CoveragePage({ initialPlanName = "Premium" }) {
               no regulamento do Pet Club no momento da contratação.
             </p>
           </div>
-          <PlanComparison />
+          {!selectedPlan.cat && <PlanComparison />}
         </section>
       </main>
       <Footer />
@@ -1483,10 +1486,8 @@ function Footer() {
     ["Dúvidas e contato", "#contato"],
   ];
   const socialLinks = [
-    { label: "X", href: "https://x.com/", icon: FaXTwitter },
-    { label: "Facebook", href: "https://www.facebook.com/", icon: FaFacebookF },
-    { label: "Instagram", href: "https://www.instagram.com/", icon: FaInstagram },
-    { label: "YouTube", href: "https://www.youtube.com/", icon: FaYoutube },
+    { label: "Instagram", href: "https://www.instagram.com/cuidary.oficial/", icon: FaInstagram },
+    { label: "WhatsApp", href: WHATSAPP_URL, icon: FaWhatsapp },
   ];
 
   function subscribe(event) {
