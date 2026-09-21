@@ -720,7 +720,7 @@ p {
   display: grid;
   align-items: start;
   gap: 5px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   margin-top: 92px;
 }
 
@@ -2412,7 +2412,7 @@ p {
 .pet-size-options {
   display: grid;
   gap: 12px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .pet-size-options button {
@@ -2429,6 +2429,15 @@ p {
   grid-template-columns: minmax(0, 1fr) 94px;
   text-align: left;
   transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.pet-size-options button.cat {
+  color: white;
+  background: #E37BE3;
+}
+
+.pet-size-options .cat .pet-size-image {
+  background: #c967c9;
 }
 
 .pet-size-options button.small {
@@ -2926,21 +2935,8 @@ p {
   border-bottom: 0;
 }
 
-.aesthetic-table th:first-child {
-  width: 23%;
-}
-
-.aesthetic-table th:nth-child(2) {
-  width: 39%;
-}
-
-.aesthetic-table th:nth-child(3) {
-  width: 16%;
-}
-
-.aesthetic-table th:nth-child(4) {
-  width: 22%;
-}
+.aesthetic-table th:first-child { width: 70%; }
+.aesthetic-table th:nth-child(2) { width: 30%; }
 
 .aesthetic-service-name {
   color: #1c1532;

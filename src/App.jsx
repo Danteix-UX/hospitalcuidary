@@ -103,6 +103,18 @@ const specialties = [
   "Cardiologia",
 ];
 
+const catPlanFeatures = [
+  ["Consultas generalistas", "4 inclusas"],
+  ["Urgência e Emergência 24h", "Incluso"],
+  ["Vacinas felinas + Raiva", "Incluso"],
+  ["Castração", "Proced. + anestesia"],
+  ["Telemedicina 24h", "Incluso"],
+  ["Banho", "1 por mês"],
+  ["Corte de unhas", "1 por mês"],
+  ["Transporte mensalista", "Incluso"],
+  ["Demais procedimentos", "20% OFF"],
+];
+
 const planFeatures = [
   "Consulta",
   "Urgência e Emergência 24h",
@@ -131,10 +143,19 @@ const plans = [
   {
     name: "Plano Premium",
     shortName: "Premium",
-    monthly: 217,
-    annual: 2343,
+    monthly: 249.9,
+    annual: 2699,
     procedureDiscount: 20,
     featured: true,
+    discounts: ["Incluso", "Incluso", "Incluso", "20% OFF"],
+  },
+  {
+    name: "Cat Premium",
+    shortName: "Cat Premium",
+    monthly: 117,
+    annual: 1264,
+    procedureDiscount: 20,
+    cat: true,
     discounts: ["Incluso", "Incluso", "Incluso", "20% OFF"],
   },
   {
@@ -153,7 +174,7 @@ const planComparisonRows = [
     values: {
       Basic: { text: "R$ 37/mês", tone: "price" },
       Essencial: { text: "R$ 57/mês", tone: "price" },
-      Premium: { text: "A partir de R$ 217/mês", tone: "price" },
+      Premium: { text: "A partir de R$ 249,90/mês", tone: "price" },
     },
   },
   {
@@ -726,7 +747,7 @@ function PlanCard({ plan, billing }) {
       <div className="price">
         {plan.featured && <small>a partir</small>}
         <span className="currency">R$</span>
-        <strong>{price}</strong>
+        <strong>{Number.isInteger(price) ? price : price.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
         <span>{cycle}</span>
       </div>
       <Button
@@ -739,22 +760,21 @@ function PlanCard({ plan, billing }) {
         Contratar agora
       </Button>
       <ul className="feature-list">
-        {planFeatures.map((feature, index) => {
-          let benefit = `${plan.procedureDiscount}% OFF`;
-          if (index === 0) benefit = "4 consultas inclusas";
-          if (index === 1) benefit = "Incluso";
-          if (index === 2) benefit = "3 vacinas inclusas";
-          if (plan.featured && index === 8) benefit = "Incluso";
-          if (plan.featured && index === 9) benefit = "Proced. + anestesia";
-          if (plan.featured && index === 10) benefit = "4 banhos & 1 Tosa/mês";
-          if (plan.featured && index === 11) benefit = "20% OFF";
-          return (
-            <li key={feature}>
-              <span>{feature}</span>
-              <small>{benefit}</small>
-            </li>
-          );
-        })}
+        {plan.cat
+          ? catPlanFeatures.map(([feature, benefit]) => (
+              <li key={feature}><span>{feature}</span><small>{benefit}</small></li>
+            ))
+          : planFeatures.map((feature, index) => {
+              let benefit = `${plan.procedureDiscount}% OFF`;
+              if (index === 0) benefit = "4 consultas inclusas";
+              if (index === 1) benefit = "Incluso";
+              if (index === 2) benefit = "3 vacinas inclusas";
+              if (plan.featured && index === 8) benefit = "Incluso";
+              if (plan.featured && index === 9) benefit = "Proced. + anestesia";
+              if (plan.featured && index === 10) benefit = "4 banhos/mês";
+              if (plan.featured && index === 11) benefit = "20% OFF";
+              return <li key={feature}><span>{feature}</span><small>{benefit}</small></li>;
+            })}
       </ul>
       <a
         className="coverage-link"
@@ -880,13 +900,13 @@ function CoverageBenefit({ category, procedure, plan }) {
     typeof procedure === "string" ? procedure : procedure.name;
   const unavailable = procedureName === "Hospedagem";
   const isIncludedVaccine =
-    category.id === "vacinas" && includedVaccines.has(procedureName);
+    category.id === "vacinas" && (plan.cat ? ["Vacina da Raiva", "Vacina Quíntupla (V5 ou V3/V4 + FeLV)", "Vacina Tríplice (V3) / Quádrupla (V4)"].includes(procedureName) : includedVaccines.has(procedureName));
   const isIncludedGeneralConsultation =
     category.id === "consultas" &&
     includedGeneralConsultations.has(procedureName);
   const isUrgencyOrEmergency = category.id === "urgencia-emergencia";
   const isPremiumCastrationIncluded =
-    plan.shortName === "Premium" &&
+    (plan.shortName === "Premium" || plan.cat) &&
     category.id === "castracao" &&
     (procedureName === "Procedimento de castração" ||
       procedureName === "Anestesia da castração");
@@ -897,7 +917,8 @@ function CoverageBenefit({ category, procedure, plan }) {
     isIncludedVaccine ||
     isIncludedGeneralConsultation ||
     isUrgencyOrEmergency ||
-    isPremiumCastrationIncluded;
+    isPremiumCastrationIncluded ||
+    ((plan.shortName === "Premium" || plan.cat) && category.id === "servicos" && procedureName === "Limpeza de ouvido");
   const waitingPeriod = isPremiumCastrationIncluded
     ? "180 dias"
     : isIncludedVaccine
@@ -907,20 +928,14 @@ function CoverageBenefit({ category, procedure, plan }) {
       : "45 dias";
 
   if (category.id === "estetica") {
-    const discountedPrice = procedure.price * (1 - plan.procedureDiscount / 100);
+    const premiumIncluded = ["Transporte mensalista", "Corte de unhas", "Banho", "Tosa higiênica"].includes(procedure.name);
+    const catIncluded = ["Transporte mensalista", "Corte de unhas", "Banho"].includes(procedure.name);
+    const includedAesthetic = plan.cat ? catIncluded : plan.shortName === "Premium" ? premiumIncluded : false;
+    const benefit = includedAesthetic ? "Incluso" : `${plan.procedureDiscount}% OFF`;
     return (
       <tr>
-        <td data-label="Serviço">
-          <strong className="aesthetic-service-name">{procedure.name}</strong>
-        </td>
-        <td data-label="Porte e modalidade">{procedure.detail}</td>
-        <td data-label="Preço original">
-          <span className="original-price">{formatBRL(procedure.price)}</span>
-        </td>
-        <td data-label="Seu desconto">
-          <span className="benefit-chip discount">{plan.procedureDiscount}% OFF</span>
-          <strong className="discounted-price">{formatBRL(discountedPrice)}</strong>
-        </td>
+        <td data-label="Serviço"><strong className="aesthetic-service-name">{procedure.name}</strong></td>
+        <td data-label="Seu benefício"><span className={`benefit-chip ${includedAesthetic ? "included" : "discount"}`}>{benefit}</span></td>
       </tr>
     );
   }
@@ -1001,7 +1016,7 @@ function PlanComparison() {
                   {plan.featured && <span>Mais completo</span>}
                   <strong>{plan.shortName}</strong>
                   <small>
-                    {plan.featured ? "a partir de " : ""}R$ {plan.monthly}/mês
+                    {plan.featured ? "a partir de " : ""}R$ {Number.isInteger(plan.monthly) ? plan.monthly : plan.monthly.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}/mês
                   </small>
                 </th>
               ))}
@@ -1069,6 +1084,8 @@ function CoveragePage({ initialPlanName = "Premium" }) {
     .map((category) => ({
       ...category,
       procedures: category.procedures.filter((procedure) => {
+        const procedureName = typeof procedure === "string" ? procedure : procedure.name;
+        if (selectedPlan.cat && /(Canin|Cinomose|Erliqu|Babes|Dirofil|Leishman|Bordetella|Adenovírus|V10|V7\/V8|Gripe)/i.test(procedureName)) return false;
         const searchable =
           typeof procedure === "string"
             ? procedure
@@ -1147,7 +1164,9 @@ function CoveragePage({ initialPlanName = "Premium" }) {
               <div>
                 <span className="coverage-plan-kicker">Você está conferindo</span>
                 <h3>{selectedPlan.name}</h3>
-                {selectedPlan.shortName === "Premium" ? (
+                {selectedPlan.cat ? (
+                  <p>Quatro consultas generalistas, urgência, emergência e vacinas felinas estão inclusas. Banho mensal, corte de unhas e transporte mensalista também estão inclusos; os demais procedimentos têm 20% de desconto.</p>
+                ) : selectedPlan.shortName === "Premium" ? (
                   <p>
                     Quatro consultas generalistas, urgência, emergência, Raiva, V10 e
                     Quíntupla estão inclusas. Na castração, somente o procedimento e a
@@ -1178,17 +1197,25 @@ function CoveragePage({ initialPlanName = "Premium" }) {
               </a>
             </div>
 
-            {selectedPlan.shortName === "Premium" ? (
+            {selectedPlan.shortName === "Premium" || selectedPlan.cat ? (
               <div className="premium-size-panel">
                 <div className="premium-size-copy">
                   <span className="premium-label">Premium completo</span>
-                  <h3>Qual é o porte do seu pet?</h3>
-                  <p>
-                    O Premium inclui <strong>4 banhos em até 1 mês + 1 tosa</strong>.
-                    Por isso, o valor acompanha o porte do pet.
-                  </p>
+                  <h3>Gato ou qual é o porte do seu cão?</h3>
+                  <p>O <strong>Cat Premium</strong> tem valor único. Para cães, o Premium inclui 4 banhos por mês e o valor acompanha o porte.</p>
                 </div>
-                <div className="pet-size-options" role="radiogroup" aria-label="Porte do pet">
+                <div className="pet-size-options" role="radiogroup" aria-label="Tipo e porte do pet">
+                  <button
+                    className={`cat${selectedPlan.cat ? " active" : ""}`}
+                    type="button"
+                    role="radio"
+                    aria-checked={selectedPlan.cat}
+                    onClick={() => selectPlan("Cat Premium")}
+                  >
+                    <span className="pet-size-copy"><strong>Gato</strong><small>valor único</small><b>R$ 117/mês</b></span>
+                    <span className="pet-size-image" aria-hidden="true"><img src={`${ASSET}/pet-size-cat.png`} alt="" /></span>
+                    <span className="pet-size-selected" aria-hidden="true">✓</span>
+                  </button>
                   {premiumSizeOptions.map((size) => (
                     <button
                       className={`${size.id}${selectedSize.id === size.id ? " active" : ""}`}
@@ -1196,7 +1223,7 @@ function CoveragePage({ initialPlanName = "Premium" }) {
                       type="button"
                       role="radio"
                       aria-checked={selectedSize.id === size.id}
-                      onClick={() => setSelectedSizeId(size.id)}
+                      onClick={() => { setSelectedSizeId(size.id); if (selectedPlan.cat) selectPlan("Premium"); }}
                     >
                       <span className="pet-size-copy">
                         <strong>{size.label}</strong>
@@ -1216,9 +1243,15 @@ function CoveragePage({ initialPlanName = "Premium" }) {
                     Seu pacote de estética
                   </strong>
                   <div className="premium-package-benefits">
-                    <span><FaBath aria-hidden="true" />4 banhos em até 1 mês</span>
-                    <span><FaCut aria-hidden="true" />1 tosa</span>
-                    <span><FaCalendarCheck aria-hidden="true" />4 utilizações no período</span>
+                    {selectedPlan.cat ? (<>
+                      <span><FaBath aria-hidden="true" />1 banho por mês</span>
+                      <span><FaCut aria-hidden="true" />1 corte de unhas</span>
+                      <span><FaCalendarCheck aria-hidden="true" />Transporte incluso</span>
+                    </>) : (<>
+                      <span><FaBath aria-hidden="true" />4 banhos por mês</span>
+                      <span><FaCut aria-hidden="true" />Corte de unhas incluso</span>
+                      <span><FaCalendarCheck aria-hidden="true" />Limpeza de ouvido inclusa</span>
+                    </>)}
                   </div>
                 </div>
               </div>
@@ -1237,7 +1270,7 @@ function CoveragePage({ initialPlanName = "Premium" }) {
         <section className="coverage-details container">
           <div
             className={
-              selectedPlan.shortName === "Premium"
+              selectedPlan.shortName === "Premium" || selectedPlan.cat
                 ? "coverage-waiting premium-waiting"
                 : "coverage-waiting"
             }
@@ -1260,10 +1293,10 @@ function CoveragePage({ initialPlanName = "Premium" }) {
               </article>
               <article>
                 <span>03</span>
-                <strong>Raiva, V10 e Quíntupla</strong>
+                <strong>{selectedPlan.cat ? "Raiva e vacinas felinas" : "Raiva, V10 e Quíntupla"}</strong>
                 <b>60 dias</b>
               </article>
-              {selectedPlan.shortName === "Premium" && (
+              {(selectedPlan.shortName === "Premium" || selectedPlan.cat) && (
                 <article className="castration-waiting-card">
                   <span>04 • PREMIUM</span>
                   <strong>Castração: procedimento + anestesia inclusos</strong>
@@ -1312,12 +1345,7 @@ function CoveragePage({ initialPlanName = "Premium" }) {
                   <table>
                     <thead>
                       {category.id === "estetica" ? (
-                        <tr>
-                          <th>Serviço</th>
-                          <th>Porte e modalidade</th>
-                          <th>Preço original</th>
-                          <th>Seu desconto</th>
-                        </tr>
+                        <tr><th>Serviço</th><th>Seu benefício</th></tr>
                       ) : (
                         <tr>
                           <th>Procedimento</th>
