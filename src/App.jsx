@@ -16,28 +16,28 @@ const ASSET = "/assets";
 const WHATSAPP_NUMBER = "553199116515";
 const ADDRESS =
   "R. Nossa Sra. das Brotas, 179 - Entre Rios de Minas, MG, 35490-000";
-const CNPJ = "61.206.429/0001-24";
+const CNPJ = "58.545.751/0001-73";
 const buildWhatsAppUrl = (message) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 const WHATSAPP_URL = buildWhatsAppUrl(
-  "Olá, gostaria de falar com a equipe Cuidary.",
+  "OlÃ¡, gostaria de falar com a equipe Cuidary.",
 );
 const PETCLUB_DONATION_URL = buildWhatsAppUrl(
-  "Olá, quero contratar o Pet Club e ajudar os pets de ONGs.",
+  "OlÃ¡, quero contratar o Pet Club e ajudar os pets de ONGs.",
 );
 const GOOGLE_MAPS_URL = "https://www.google.com/maps/place/Cuidary+-+Hospital+Veterin%C3%A1rio+24+horas/@-20.6744341,-44.0668394,1384m/data=!3m1!1e3!4m6!3m5!1s0xa16ddd87db6107:0xdc00b321d6ce76b0!8m2!3d-20.672873!4d-44.064612!16s%2Fg%2F11nvvbs1vf?hl=pt_BR&entry=ttu&g_ep=EgoyMDI2MDkyMC4wIKXMDSoASAFQAw%3D%3D";
 const WAZE_URL = `https://waze.com/ul?q=${encodeURIComponent(ADDRESS)}&navigate=yes&utm_source=cuidary_site`;
 
 const gallery = [
-  ["estrutura-consultorio-01.png", "Consultório 01"],
-  ["estrutura-consultorio-02.png", "Consultório 02"],
-  ["estrutura-recepcao.png", "Recepção"],
-  ["estrutura-recepcao-02.png", "Recepção 02"],
+  ["estrutura-consultorio-01.png", "ConsultÃ³rio 01"],
+  ["estrutura-consultorio-02.png", "ConsultÃ³rio 02"],
+  ["estrutura-recepcao.png", "RecepÃ§Ã£o"],
+  ["estrutura-recepcao-02.png", "RecepÃ§Ã£o 02"],
   ["estrutura-sala-banho.png", "Sala de banho"],
   ["estrutura-corredor.png", "Corredor"],
-  ["estrutura-internacao-01.png", "Internação 01"],
+  ["estrutura-internacao-01.png", "InternaÃ§Ã£o 01"],
   ["estrutura-isolamento.png", "Isolamento"],
-  ["estrutura-bloco-cirurgico.png", "Bloco cirúrgico"],
+  ["estrutura-bloco-cirurgico.png", "Bloco cirÃºrgico"],
 ];
 
 const services = [
@@ -53,7 +53,7 @@ const services = [
     icon: "service-lightning.png",
   },
   {
-    title: "Cirurgia e Internação",
+    title: "Cirurgia e InternaÃ§Ã£o",
     text: "Ambiente equipado para que seu pet seja bem atendido",
     icon: "service-care.png",
   },
@@ -90,11 +90,11 @@ const specialties = [
   "Endocrinologia",
   "Medicina felina",
   "Ultrassom",
-  "Limpeza de tártaro",
-  "Castração",
+  "Limpeza de tÃ¡rtaro",
+  "CastraÃ§Ã£o",
   "Exames",
   "Vacinas",
-  "Internação",
+  "InternaÃ§Ã£o",
   "Hemograma",
   "Raio X",
   "Cardiologia",
@@ -102,26 +102,26 @@ const specialties = [
 
 const catPlanFeatures = [
   ["Consultas generalistas", "4 inclusas"],
-  ["Urgência e Emergência 24h", "Incluso"],
+  ["UrgÃªncia e EmergÃªncia 24h", "Incluso"],
   ["Vacinas felinas + Raiva", "Incluso"],
-  ["Castração", "Proced. + anestesia"],
+  ["CastraÃ§Ã£o", "Proced. + anestesia"],
   ["Telemedicina 24h", "Incluso"],
-  ["Banho", "1 por mês"],
-  ["Corte de unhas", "1 por mês"],
+  ["Banho", "1 por mÃªs"],
+  ["Corte de unhas", "1 por mÃªs"],
   ["Demais procedimentos", "20% OFF"],
 ];
 
 const planFeatures = [
   "Consulta",
-  "Urgência e Emergência 24h",
-  "Vacinas V10, Raiva e Quíntupla",
+  "UrgÃªncia e EmergÃªncia 24h",
+  "Vacinas V10, Raiva e QuÃ­ntupla",
   "Cirurgias",
-  "Internação",
+  "InternaÃ§Ã£o",
   "Ultrassom",
   "Raio X e Exames",
-  "Remoção de tártaro",
+  "RemoÃ§Ã£o de tÃ¡rtaro",
   "Telemedicina 24h",
-  "Castração",
+  "CastraÃ§Ã£o",
   "Banho & Tosa",
   "Pet sitter",
   "Medicamentos",
@@ -168,9 +168,9 @@ const planComparisonRows = [
   {
     label: "Mensalidade",
     values: {
-      Basic: { text: "R$ 37/mês", tone: "price" },
-      Essencial: { text: "R$ 57/mês", tone: "price" },
-      Premium: { text: "A partir de R$ 249/mês", tone: "price" },
+      Basic: { text: "R$ 37/mÃªs", tone: "price" },
+      Essencial: { text: "R$ 57/mÃªs", tone: "price" },
+      Premium: { text: "A partir de R$ 249/mÃªs", tone: "price" },
     },
   },
   {
@@ -182,7 +182,7 @@ const planComparisonRows = [
     },
   },
   {
-    label: "Urgência e emergência 24h",
+    label: "UrgÃªncia e emergÃªncia 24h",
     values: {
       Basic: { text: "Incluso", tone: "included" },
       Essencial: { text: "Incluso", tone: "included" },
@@ -190,7 +190,7 @@ const planComparisonRows = [
     },
   },
   {
-    label: "Vacinas V10, Raiva e Quíntupla",
+    label: "Vacinas V10, Raiva e QuÃ­ntupla",
     values: {
       Basic: { text: "3 inclusas", tone: "included" },
       Essencial: { text: "3 inclusas", tone: "included" },
@@ -214,15 +214,15 @@ const planComparisonRows = [
     },
   },
   {
-    label: "Castração",
+    label: "CastraÃ§Ã£o",
     values: {
       Basic: { text: "10% OFF", tone: "discount" },
       Essencial: { text: "15% OFF", tone: "discount" },
-      Premium: { text: "Procedimento + anestesia • 180 dias", tone: "premium" },
+      Premium: { text: "Procedimento + anestesia â€¢ 180 dias", tone: "premium" },
     },
   },
   {
-    label: "Internação",
+    label: "InternaÃ§Ã£o",
     values: {
       Basic: { text: "10% OFF", tone: "discount" },
       Essencial: { text: "15% OFF", tone: "discount" },
@@ -242,7 +242,7 @@ const planComparisonRows = [
     values: {
       Basic: { text: "10% OFF", tone: "discount" },
       Essencial: { text: "15% OFF", tone: "discount" },
-      Premium: { text: "4 banhos + 1 tosa/mês", tone: "premium" },
+      Premium: { text: "4 banhos + 1 tosa/mÃªs", tone: "premium" },
     },
   },
   {
@@ -256,9 +256,9 @@ const planComparisonRows = [
   {
     label: "Hospedagem",
     values: {
-      Basic: { text: "Indisponível", tone: "unavailable" },
-      Essencial: { text: "Indisponível", tone: "unavailable" },
-      Premium: { text: "Indisponível", tone: "unavailable" },
+      Basic: { text: "IndisponÃ­vel", tone: "unavailable" },
+      Essencial: { text: "IndisponÃ­vel", tone: "unavailable" },
+      Premium: { text: "IndisponÃ­vel", tone: "unavailable" },
     },
   },
 ];
@@ -267,40 +267,40 @@ const testimonials = [
   {
     image: "testimonial-01.png",
     name: "Fernanda Beuren",
-    role: "Esteticista Especialista em Estética Integrativa e em tecnológica",
+    role: "Esteticista Especialista em EstÃ©tica Integrativa e em tecnolÃ³gica",
   },
   {
     image: "testimonial-02.png",
     name: "Carolina Mattei de Reis",
-    role: "Biomédica Esteta - CM Clínica Estética Avançada & Saúde",
+    role: "BiomÃ©dica Esteta - CM ClÃ­nica EstÃ©tica AvanÃ§ada & SaÃºde",
   },
   {
     image: "testimonial-03.png",
-    name: "Patrícia Rodella",
-    role: "Farmacêutica-Bioquímica e Esteta, doutora de Ciências Farmacêuticas",
+    name: "PatrÃ­cia Rodella",
+    role: "FarmacÃªutica-BioquÃ­mica e Esteta, doutora de CiÃªncias FarmacÃªuticas",
   },
   {
     image: "testimonial-04.png",
     name: "Bruna Serolli",
-    role: "Linfoterapeuta - Clínica Kurah",
+    role: "Linfoterapeuta - ClÃ­nica Kurah",
   },
   {
     image: "testimonial-05.png",
-    name: "Leonardo Bündrich",
-    role: "Cirurgião-dentista e mestre Estomatologista",
+    name: "Leonardo BÃ¼ndrich",
+    role: "CirurgiÃ£o-dentista e mestre Estomatologista",
   },
 ];
 
 const faqs = [
-  ["A Cuidary funciona 24 horas?", "Sim. O hospital mantém atendimento veterinário 24 horas por dia, todos os dias da semana."],
-  ["É necessário agendar uma emergência?", "Não. Emergências são recebidas a qualquer hora. Se puder, avise a equipe pelo WhatsApp enquanto estiver a caminho."],
-  ["A Cuidary possui raio-X?", "Sim. A estrutura conta com diagnóstico por imagem para agilizar a avaliação do seu pet."],
-  ["A Cuidary realiza exames?", "Sim. Realizamos exames laboratoriais e de imagem de acordo com a indicação clínica."],
-  ["Existe internação?", "Sim. Contamos com ambientes de internação organizados para as diferentes necessidades dos pacientes."],
-  ["A Cuidary realiza cirurgias?", "Sim. A equipe realiza procedimentos cirúrgicos com estrutura preparada e acompanhamento veterinário."],
-  ["O Pet Club é um plano de saúde?", "É um clube de benefícios veterinários, com serviços inclusos e descontos conforme o plano escolhido."],
-  ["A Cuidary atende animais de outras cidades?", "Sim. Recebemos pacientes de Entre Rios de Minas e de toda a região."],
-  ["Posso testar antes de pagar?", "Fale com a nossa equipe para conhecer as condições atuais e escolher o plano ideal para o seu pet."],
+  ["A Cuidary funciona 24 horas?", "Sim. O hospital mantÃ©m atendimento veterinÃ¡rio 24 horas por dia, todos os dias da semana."],
+  ["Ã‰ necessÃ¡rio agendar uma emergÃªncia?", "NÃ£o. EmergÃªncias sÃ£o recebidas a qualquer hora. Se puder, avise a equipe pelo WhatsApp enquanto estiver a caminho."],
+  ["A Cuidary possui raio-X?", "Sim. A estrutura conta com diagnÃ³stico por imagem para agilizar a avaliaÃ§Ã£o do seu pet."],
+  ["A Cuidary realiza exames?", "Sim. Realizamos exames laboratoriais e de imagem de acordo com a indicaÃ§Ã£o clÃ­nica."],
+  ["Existe internaÃ§Ã£o?", "Sim. Contamos com ambientes de internaÃ§Ã£o organizados para as diferentes necessidades dos pacientes."],
+  ["A Cuidary realiza cirurgias?", "Sim. A equipe realiza procedimentos cirÃºrgicos com estrutura preparada e acompanhamento veterinÃ¡rio."],
+  ["O Pet Club Ã© um plano de saÃºde?", "Ã‰ um clube de benefÃ­cios veterinÃ¡rios, com serviÃ§os inclusos e descontos conforme o plano escolhido."],
+  ["A Cuidary atende animais de outras cidades?", "Sim. Recebemos pacientes de Entre Rios de Minas e de toda a regiÃ£o."],
+  ["Posso testar antes de pagar?", "Fale com a nossa equipe para conhecer as condiÃ§Ãµes atuais e escolher o plano ideal para o seu pet."],
 ];
 
 function Logo({ className = "" }) {
@@ -318,7 +318,7 @@ function Button({
   return (
     <a className={`button ${className}`} href={href} target={target} rel={rel}>
       {children}
-      {showArrow && <span aria-hidden="true">›</span>}
+      {showArrow && <span aria-hidden="true">â€º</span>}
     </a>
   );
 }
@@ -467,17 +467,17 @@ function Header() {
 
   return (
     <header className="site-header">
-      <a href="#inicio" aria-label="Ir para o início">
+      <a href="#inicio" aria-label="Ir para o inÃ­cio">
         <Logo className="header-logo" />
       </a>
-      <nav className={open ? "nav open" : "nav"} aria-label="Navegação principal">
+      <nav className={open ? "nav open" : "nav"} aria-label="NavegaÃ§Ã£o principal">
         <a href="#hospital" onClick={() => setOpen(false)}>Hospital</a>
         <a href="#estrutura" onClick={() => setOpen(false)}>Estrutura</a>
-        <a href="#servicos" onClick={() => setOpen(false)}>Serviços</a>
+        <a href="#servicos" onClick={() => setOpen(false)}>ServiÃ§os</a>
         <a href="#especialidades" onClick={() => setOpen(false)}>Especialidades</a>
         <a href="#planos" onClick={() => setOpen(false)}>Pet Club</a>
       </nav>
-      <a className="client-button" href="#cuidaryclub">Área do cliente</a>
+      <a className="client-button" href="#cuidaryclub">Ãrea do cliente</a>
       <button
         className={open ? "menu-button active" : "menu-button"}
         type="button"
@@ -512,7 +512,7 @@ function Hero() {
           </span>
         </h1>
         <p className="hero-description">
-          Atendimento veterinário 24 horas, diagnóstico, cirurgia e internação
+          Atendimento veterinÃ¡rio 24 horas, diagnÃ³stico, cirurgia e internaÃ§Ã£o
           sem precisar sair da cidade.
         </p>
       </div>
@@ -536,8 +536,8 @@ function Structure() {
         </div>
         <div className="intro-copy">
           <p>
-            Nossa estrutura permite integrar consultas, exames, diagnóstico,
-            tratamento, procedimentos cirúrgicos e internação, conforme a
+            Nossa estrutura permite integrar consultas, exames, diagnÃ³stico,
+            tratamento, procedimentos cirÃºrgicos e internaÃ§Ã£o, conforme a
             necessidade de cada paciente.
           </p>
           <Button>Agendar uma consulta</Button>
@@ -548,7 +548,7 @@ function Structure() {
         <AutoCarousel
           items={gallery}
           type="gallery"
-          label="Ambientes da Cuidary em apresentação automática"
+          label="Ambientes da Cuidary em apresentaÃ§Ã£o automÃ¡tica"
         />
       </div>
     </section>
@@ -560,18 +560,18 @@ function Services() {
     <section className="services" id="servicos">
       <div className="container services-grid">
         <div className="services-copy">
-          <p className="eyebrow dark-eyebrow">Estrutura planejada para oferecer segurança e eficiência</p>
+          <p className="eyebrow dark-eyebrow">Estrutura planejada para oferecer seguranÃ§a e eficiÃªncia</p>
           <h2 className="pet-headline services-headline">
             <span>Ambientes organizados</span>
             <span>
               para diferentes <PetPill image="pet-pill-dog.png" className="animal-inline-wide" />
             </span>
-            <span>necessidades clínicas</span>
+            <span>necessidades clÃ­nicas</span>
           </h2>
           <p>
             Cada setor da Cuidary foi desenvolvido para proporcionar conforto aos
-            pacientes, melhores condições de trabalho para a equipe e mais
-            segurança durante os atendimentos.
+            pacientes, melhores condiÃ§Ãµes de trabalho para a equipe e mais
+            seguranÃ§a durante os atendimentos.
           </p>
           <Button>Agendar uma consulta</Button>
         </div>
@@ -593,14 +593,14 @@ function Services() {
 
 function CareBanner() {
   return (
-    <section className="care-banner" aria-label="Consultório exclusivo para gatos">
+    <section className="care-banner" aria-label="ConsultÃ³rio exclusivo para gatos">
       <div className="container care-banner-inner">
         <article className="care-card">
           <img className="care-mark" src={`${ASSET}/mark.png`} alt="" />
-          <h2>Consultório exclusivo para gatos</h2>
+          <h2>ConsultÃ³rio exclusivo para gatos</h2>
           <p>
-            Separar gatos de cães reduz cheiros, sons e contato visual que podem causar
-            estresse, deixando a avaliação mais tranquila, segura e precisa.
+            Separar gatos de cÃ£es reduz cheiros, sons e contato visual que podem causar
+            estresse, deixando a avaliaÃ§Ã£o mais tranquila, segura e precisa.
           </p>
           <Button>Agendar uma consulta</Button>
         </article>
@@ -625,7 +625,7 @@ function Team() {
             <span>
               se fossem <PetPill image="pet-pill-cat.png" className="animal-inline-cat" /> da
             </span>
-            <span>nossa família</span>
+            <span>nossa famÃ­lia</span>
           </h2>
           <Button>Agendar uma consulta</Button>
         </div>
@@ -734,7 +734,7 @@ function Marquee({ reverse = false }) {
 
 function PlanCard({ plan, billing }) {
   const price = billing === "monthly" ? plan.monthly : plan.annual;
-  const cycle = billing === "monthly" ? "/mês" : "/ano";
+  const cycle = billing === "monthly" ? "/mÃªs" : "/ano";
   return (
     <article className={plan.featured ? "plan-card featured" : "plan-card"}>
       {plan.featured && <span className="recommended">Indicado</span>}
@@ -748,7 +748,7 @@ function PlanCard({ plan, billing }) {
       </div>
       <Button
         href={buildWhatsAppUrl(
-          `Olá, quero saber mais informações sobre o ${plan.name}.`,
+          `OlÃ¡, quero saber mais informaÃ§Ãµes sobre o ${plan.name}.`,
         )}
         target="_blank"
         rel="noreferrer"
@@ -767,7 +767,7 @@ function PlanCard({ plan, billing }) {
               if (index === 2) benefit = "3 vacinas inclusas";
               if (plan.featured && index === 8) benefit = "Incluso";
               if (plan.featured && index === 9) benefit = "Proced. + anestesia";
-              if (plan.featured && index === 10) benefit = "4 banhos/mês";
+              if (plan.featured && index === 10) benefit = "4 banhos/mÃªs";
               if (plan.featured && index === 11) benefit = "20% OFF";
               return <li key={feature}><span>{feature}</span><small>{benefit}</small></li>;
             })}
@@ -790,22 +790,22 @@ function Club() {
   return (
     <section className="club-section" id="especialidades">
       <div className="specialties-header container">
-        <p className="eyebrow light-eyebrow">Especialidades veterinárias</p>
+        <p className="eyebrow light-eyebrow">Especialidades veterinÃ¡rias</p>
         <h2>Cuidado especializado sem precisar<br />sair da cidade</h2>
       </div>
       <Marquee />
       <Marquee reverse />
 
       <div className="club-intro container" id="cuidaryclub">
-        <p className="eyebrow light-eyebrow">Especialidades veterinárias</p>
+        <p className="eyebrow light-eyebrow">Especialidades veterinÃ¡rias</p>
         <h2>
-          Economize com procedimento veterinário
+          Economize com procedimento veterinÃ¡rio
           <br />
           usando nosso <em>pet</em><sup>CLUB</sup>
         </h2>
         <p>
-          O Pet Club da Cuidary é um programa de benefícios exclusivo para clientes que
-          querem cuidar do seu pet com segurança e economia.
+          O Pet Club da Cuidary Ã© um programa de benefÃ­cios exclusivo para clientes que
+          querem cuidar do seu pet com seguranÃ§a e economia.
         </p>
         <div className="billing-toggle" aria-label="Periodicidade do plano">
           <button
@@ -841,7 +841,7 @@ function Club() {
           </span>
           <span className="donation-line donation-line-food">
             <b>1KG</b>
-            <span>de ração</span>
+            <span>de raÃ§Ã£o</span>
             <PetPill image="pet-pill-cat.png" className="donation-cat" />
             <span>para protetores</span>
           </span>
@@ -853,13 +853,13 @@ function Club() {
             <strong>Doamos 1KG</strong>
             <PetPill image="pet-pill-cat.png" />
           </div>
-          <p>de ração para protetores animais</p>
+          <p>de raÃ§Ã£o para protetores animais</p>
         </div>
         <div className="donation-action">
           <a href={PETCLUB_DONATION_URL} target="_blank" rel="noreferrer">
-            Ajude cuidar dos pets 💜
+            Ajude cuidar dos pets ðŸ’œ
           </a>
-          <small>Proteja seu pet e ajude a ONGs e protetores animais da região.</small>
+          <small>Proteja seu pet e ajude a ONGs e protetores animais da regiÃ£o.</small>
         </div>
       </div>
     </section>
@@ -874,15 +874,15 @@ const normalizeSearch = (value) =>
 
 const includedVaccines = new Set([
   "Vacina da Raiva",
-  "Vacina Quíntupla (V5 ou V3/V4 + FeLV)",
+  "Vacina QuÃ­ntupla (V5 ou V3/V4 + FeLV)",
   "Vacina Polivalente V10",
 ]);
 
 const includedGeneralConsultations = new Set([
-  "Retorno Clínico",
-  "Consulta Clínico Geral",
-  "Retorno em Horário de Plantão",
-  "Consulta Plantão",
+  "Retorno ClÃ­nico",
+  "Consulta ClÃ­nico Geral",
+  "Retorno em HorÃ¡rio de PlantÃ£o",
+  "Consulta PlantÃ£o",
 ]);
 
 const formatBRL = (value) =>
@@ -896,7 +896,7 @@ function CoverageBenefit({ category, procedure, plan }) {
     typeof procedure === "string" ? procedure : procedure.name;
   const unavailable = procedureName === "Hospedagem";
   const isIncludedVaccine =
-    category.id === "vacinas" && (plan.cat ? ["Vacina da Raiva", "Vacina Quíntupla (V5 ou V3/V4 + FeLV)", "Vacina Tríplice (V3) / Quádrupla (V4)"].includes(procedureName) : includedVaccines.has(procedureName));
+    category.id === "vacinas" && (plan.cat ? ["Vacina da Raiva", "Vacina QuÃ­ntupla (V5 ou V3/V4 + FeLV)", "Vacina TrÃ­plice (V3) / QuÃ¡drupla (V4)"].includes(procedureName) : includedVaccines.has(procedureName));
   const isIncludedGeneralConsultation =
     category.id === "consultas" &&
     includedGeneralConsultations.has(procedureName);
@@ -904,11 +904,11 @@ function CoverageBenefit({ category, procedure, plan }) {
   const isPremiumCastrationIncluded =
     (plan.shortName === "Premium" || plan.cat) &&
     category.id === "castracao" &&
-    (procedureName === "Procedimento de castração" ||
-      procedureName === "Anestesia da castração");
+    (procedureName === "Procedimento de castraÃ§Ã£o" ||
+      procedureName === "Anestesia da castraÃ§Ã£o");
   const isPlantao =
     isIncludedGeneralConsultation &&
-    procedureName.toLowerCase().includes("plantão");
+    procedureName.toLowerCase().includes("plantÃ£o");
   const included =
     isIncludedVaccine ||
     isIncludedGeneralConsultation ||
@@ -924,14 +924,14 @@ function CoverageBenefit({ category, procedure, plan }) {
       : "45 dias";
 
   if (category.id === "estetica") {
-    const premiumIncluded = ["Transporte mensalista", "Corte de unhas", "Banho", "Tosa higiênica"].includes(procedure.name);
+    const premiumIncluded = ["Transporte mensalista", "Corte de unhas", "Banho", "Tosa higiÃªnica"].includes(procedure.name);
     const catIncluded = ["Corte de unhas", "Banho"].includes(procedure.name);
     const includedAesthetic = plan.cat ? catIncluded : plan.shortName === "Premium" ? premiumIncluded : false;
     const benefit = includedAesthetic ? "Incluso" : `${plan.procedureDiscount}% OFF`;
     return (
       <tr>
-        <td data-label="Serviço"><strong className="aesthetic-service-name">{procedure.name}</strong></td>
-        <td data-label="Seu benefício"><span className={`benefit-chip ${includedAesthetic ? "included" : "discount"}`}>{benefit}</span></td>
+        <td data-label="ServiÃ§o"><strong className="aesthetic-service-name">{procedure.name}</strong></td>
+        <td data-label="Seu benefÃ­cio"><span className={`benefit-chip ${includedAesthetic ? "included" : "discount"}`}>{benefit}</span></td>
       </tr>
     );
   }
@@ -939,7 +939,7 @@ function CoverageBenefit({ category, procedure, plan }) {
   return (
     <tr>
       <td data-label="Procedimento">{procedureName}</td>
-      <td data-label="Seu benefício">
+      <td data-label="Seu benefÃ­cio">
         <span
           className={
             unavailable
@@ -950,13 +950,13 @@ function CoverageBenefit({ category, procedure, plan }) {
           }
         >
           {unavailable
-            ? "Indisponível"
+            ? "IndisponÃ­vel"
             : included
               ? "Incluso"
               : `${plan.procedureDiscount}% OFF`}
         </span>
       </td>
-      <td data-label="Carência">
+      <td data-label="CarÃªncia">
         <span
           className={
             unavailable
@@ -966,7 +966,7 @@ function CoverageBenefit({ category, procedure, plan }) {
                 : "waiting-time no-wait"
           }
         >
-          {unavailable ? "—" : included ? waitingPeriod : "Sem carência"}
+          {unavailable ? "â€”" : included ? waitingPeriod : "Sem carÃªncia"}
         </span>
       </td>
     </tr>
@@ -974,11 +974,11 @@ function CoverageBenefit({ category, procedure, plan }) {
 }
 
 function ComparisonValue({ benefit }) {
-  if (!benefit) return <span className="comparison-value unavailable">—</span>;
+  if (!benefit) return <span className="comparison-value unavailable">â€”</span>;
 
   return (
     <span className={`comparison-value ${benefit.tone}`}>
-      {benefit.tone === "included" && <b aria-hidden="true">✓</b>}
+      {benefit.tone === "included" && <b aria-hidden="true">âœ“</b>}
       {benefit.text}
     </span>
   );
@@ -997,8 +997,8 @@ function PlanComparison() {
           <h2 id="plan-comparison-title">Qual Pet Club combina com seu pet?</h2>
         </div>
         <p>
-          Veja lado a lado os principais benefícios. Os serviços com desconto podem
-          ser usados sem carência.
+          Veja lado a lado os principais benefÃ­cios. Os serviÃ§os com desconto podem
+          ser usados sem carÃªncia.
         </p>
       </div>
 
@@ -1006,7 +1006,7 @@ function PlanComparison() {
         <table className="plan-comparison-table">
           <thead>
             <tr>
-              <th scope="col">Benefício</th>
+              <th scope="col">BenefÃ­cio</th>
               {comparisonPlans.map((plan) => (
                 <th
                   className={plan.featured ? "featured" : ""}
@@ -1016,7 +1016,7 @@ function PlanComparison() {
                   {plan.featured && <span>Mais completo</span>}
                   <strong>{plan.shortName}</strong>
                   <small>
-                    {plan.featured ? "a partir de " : ""}R$ {Number.isInteger(plan.monthly) ? plan.monthly : plan.monthly.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}/mês
+                    {plan.featured ? "a partir de " : ""}R$ {Number.isInteger(plan.monthly) ? plan.monthly : plan.monthly.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}/mÃªs
                   </small>
                 </th>
               ))}
@@ -1040,7 +1040,7 @@ function PlanComparison() {
         </table>
       </div>
 
-      <div className="plan-comparison-mobile" aria-label="Comparação dos planos">
+      <div className="plan-comparison-mobile" aria-label="ComparaÃ§Ã£o dos planos">
         {comparisonPlans.map((plan) => (
           <article className={plan.featured ? "featured" : ""} key={plan.shortName}>
             <header>
@@ -1050,7 +1050,7 @@ function PlanComparison() {
               </div>
               <strong>
                 {plan.featured && <small>a partir de</small>}
-                R$ {plan.monthly}<em>/mês</em>
+                R$ {plan.monthly}<em>/mÃªs</em>
               </strong>
             </header>
             <ul>
@@ -1085,12 +1085,12 @@ function CoveragePage({ initialPlanName = "Premium" }) {
       ...category,
       procedures: category.procedures.filter((procedure) => {
         const procedureName = typeof procedure === "string" ? procedure : procedure.name;
-        if (selectedPlan.cat && /(Canin|Cinomose|Erliqu|Babes|Dirofil|Leishman|Bordetella|Adenovírus|V10|V7\/V8|Gripe)/i.test(procedureName)) return false;
-        if (selectedPlan.cat && category.id === "servicos" && ["Limpeza de ouvido", "Locação de sala para atendimento volante"].includes(procedureName)) return false;
+        if (selectedPlan.cat && /(Canin|Cinomose|Erliqu|Babes|Dirofil|Leishman|Bordetella|AdenovÃ­rus|V10|V7\/V8|Gripe)/i.test(procedureName)) return false;
+        if (selectedPlan.cat && category.id === "servicos" && ["Limpeza de ouvido", "LocaÃ§Ã£o de sala para atendimento volante"].includes(procedureName)) return false;
         if (
           selectedPlan.cat &&
           category.id === "estetica" &&
-          ["Transporte mensalista", "Tosa higiênica", "Tosa na tesoura", "Desembolar", "Tosa de patinha", "Tosa na máquina"].includes(procedureName)
+          ["Transporte mensalista", "Tosa higiÃªnica", "Tosa na tesoura", "Desembolar", "Tosa de patinha", "Tosa na mÃ¡quina"].includes(procedureName)
         ) return false;
         const searchable =
           typeof procedure === "string"
@@ -1106,8 +1106,8 @@ function CoveragePage({ initialPlanName = "Premium" }) {
   );
   const planMessage =
     selectedPlan.shortName === "Premium"
-      ? `Olá, quero saber mais sobre o Plano Premium para um pet de porte ${selectedSize.label.toLowerCase()}.`
-      : `Olá, quero saber mais sobre o ${selectedPlan.name}.`;
+      ? `OlÃ¡, quero saber mais sobre o Plano Premium para um pet de porte ${selectedSize.label.toLowerCase()}.`
+      : `OlÃ¡, quero saber mais sobre o ${selectedPlan.name}.`;
 
   useEffect(() => {
     setSelectedPlanName(initialPlanName);
@@ -1129,23 +1129,23 @@ function CoveragePage({ initialPlanName = "Premium" }) {
         <div className="coverage-hero-shade" />
         <div className="container coverage-hero-content">
           <img src={`${ASSET}/petclub-logo.svg`} alt="Pet Club Cuidary" />
-          <p>Planos disponíveis em Entre Rios de Minas e região</p>
+          <p>Planos disponÃ­veis em Entre Rios de Minas e regiÃ£o</p>
           <h1>As maiores coberturas<br />para o seu pet</h1>
-          <a href="#cobertura-detalhes">Conferir todos os benefícios <span>↓</span></a>
+          <a href="#cobertura-detalhes">Conferir todos os benefÃ­cios <span>â†“</span></a>
         </div>
       </section>
 
       <main className="coverage-main" id="cobertura-detalhes">
         <section className="coverage-intro container">
-          <a className="coverage-back" href="#planos">← Voltar para os planos</a>
+          <a className="coverage-back" href="#planos">â† Voltar para os planos</a>
           <div className="coverage-heading">
             <div>
               <p className="eyebrow">Cobertura Pet Club</p>
-              <h2>Tudo o que você precisa saber, sem letras miúdas</h2>
+              <h2>Tudo o que vocÃª precisa saber, sem letras miÃºdas</h2>
             </div>
             <p>
-              Escolha o plano, confira cada procedimento e veja com clareza o que está
-              incluso, qual é o desconto e quando o benefício fica disponível.
+              Escolha o plano, confira cada procedimento e veja com clareza o que estÃ¡
+              incluso, qual Ã© o desconto e quando o benefÃ­cio fica disponÃ­vel.
             </p>
           </div>
 
@@ -1168,22 +1168,22 @@ function CoveragePage({ initialPlanName = "Premium" }) {
 
             <div className="coverage-plan-summary">
               <div>
-                <span className="coverage-plan-kicker">Você está conferindo</span>
+                <span className="coverage-plan-kicker">VocÃª estÃ¡ conferindo</span>
                 <h3>{selectedPlan.name}</h3>
                 {selectedPlan.cat ? (
-                  <p>Quatro consultas generalistas, urgência, emergência e vacinas felinas estão inclusas. Banho mensal e corte de unhas também estão inclusos; os demais procedimentos têm 20% de desconto.</p>
+                  <p>Quatro consultas generalistas, urgÃªncia, emergÃªncia e vacinas felinas estÃ£o inclusas. Banho mensal e corte de unhas tambÃ©m estÃ£o inclusos; os demais procedimentos tÃªm 20% de desconto.</p>
                 ) : selectedPlan.shortName === "Premium" ? (
                   <p>
-                    Quatro consultas generalistas, urgência, emergência, Raiva, V10 e
-                    Quíntupla estão inclusas. Na castração, somente o procedimento e a
-                    anestesia estão inclusos após 180 dias; internação e medicamentos têm
+                    Quatro consultas generalistas, urgÃªncia, emergÃªncia, Raiva, V10 e
+                    QuÃ­ntupla estÃ£o inclusas. Na castraÃ§Ã£o, somente o procedimento e a
+                    anestesia estÃ£o inclusos apÃ³s 180 dias; internaÃ§Ã£o e medicamentos tÃªm
                     20% de desconto.
                   </p>
                 ) : (
                   <p>
-                    Quatro consultas generalistas, urgência, emergência, Raiva, V10 e
-                    Quíntupla estão inclusas. Especialistas e os demais procedimentos
-                    têm {selectedPlan.procedureDiscount}% de desconto.
+                    Quatro consultas generalistas, urgÃªncia, emergÃªncia, Raiva, V10 e
+                    QuÃ­ntupla estÃ£o inclusas. Especialistas e os demais procedimentos
+                    tÃªm {selectedPlan.procedureDiscount}% de desconto.
                   </p>
                 )}
               </div>
@@ -1191,7 +1191,7 @@ function CoveragePage({ initialPlanName = "Premium" }) {
                 {selectedPlan.shortName === "Premium" && <small>a partir de</small>}
                 <span>R$</span>
                 <strong>{monthlyPrice}</strong>
-                <em>/mês</em>
+                <em>/mÃªs</em>
               </div>
               <a
                 className="button coverage-hire"
@@ -1207,8 +1207,8 @@ function CoveragePage({ initialPlanName = "Premium" }) {
               <div className="premium-size-panel">
                 <div className="premium-size-copy">
                   <span className="premium-label">Premium completo</span>
-                  <h3>Qual é o porte do seu pet?</h3>
-                  <p>O Premium inclui <strong>4 banhos por mês</strong>. Por isso, o valor acompanha o porte do cão.</p>
+                  <h3>Qual Ã© o porte do seu pet?</h3>
+                  <p>O Premium inclui <strong>4 banhos por mÃªs</strong>. Por isso, o valor acompanha o porte do cÃ£o.</p>
                 </div>
                 <div className="pet-size-options" role="radiogroup" aria-label="Porte do pet">
                   {premiumSizeOptions.map((size) => (
@@ -1223,22 +1223,22 @@ function CoveragePage({ initialPlanName = "Premium" }) {
                       <span className="pet-size-copy">
                         <strong>{size.label}</strong>
                         <small>{size.hint}</small>
-                        <b>R$ {size.monthly}/mês</b>
+                        <b>R$ {size.monthly}/mÃªs</b>
                       </span>
                       <span className="pet-size-image" aria-hidden="true">
                         <img src={`${ASSET}/${size.image}`} alt="" />
                       </span>
-                      <span className="pet-size-selected" aria-hidden="true">✓</span>
+                      <span className="pet-size-selected" aria-hidden="true">âœ“</span>
                     </button>
                   ))}
                 </div>
                 <div className="premium-package-note">
                   <strong className="premium-package-title">
                     <img src={`${ASSET}/brand-heart.svg`} alt="" />
-                    Seu pacote de estética
+                    Seu pacote de estÃ©tica
                   </strong>
                   <div className="premium-package-benefits">
-                    <span><FaBath aria-hidden="true" />4 banhos por mês</span>
+                    <span><FaBath aria-hidden="true" />4 banhos por mÃªs</span>
                     <span><FaCut aria-hidden="true" />Corte de unhas incluso</span>
                     <span><FaCalendarCheck aria-hidden="true" />Limpeza de ouvido inclusa</span>
                   </div>
@@ -1249,38 +1249,38 @@ function CoveragePage({ initialPlanName = "Premium" }) {
                 <div className="premium-size-copy">
                   <span className="premium-label">Exclusivo para gatos</span>
                   <h3>Cat Premium</h3>
-                  <p>Um plano pensado só para gatos, com <strong>valor único de R$ 117/mês</strong> e benefícios felinos sem mistura com os planos para cães.</p>
+                  <p>Um plano pensado sÃ³ para gatos, com <strong>valor Ãºnico de R$ 117/mÃªs</strong> e benefÃ­cios felinos sem mistura com os planos para cÃ£es.</p>
                 </div>
                 <div className="pet-size-options cat-only" aria-label="Plano exclusivo para gatos">
                   <div className="pet-size-cat-card">
                     <span className="pet-size-copy">
                       <strong>Gato</strong>
-                      <small>valor único</small>
-                      <b>R$ 117/mês</b>
+                      <small>valor Ãºnico</small>
+                      <b>R$ 117/mÃªs</b>
                     </span>
                     <span className="pet-size-image" aria-hidden="true">
                       <img src={`${ASSET}/pet-size-cat.png`} alt="" />
                     </span>
-                    <span className="pet-size-selected visible" aria-hidden="true">✓</span>
+                    <span className="pet-size-selected visible" aria-hidden="true">âœ“</span>
                   </div>
                 </div>
                 <div className="premium-package-note">
                   <strong className="premium-package-title">
                     <img src={`${ASSET}/brand-heart.svg`} alt="" />
-                    Seu pacote de estética
+                    Seu pacote de estÃ©tica
                   </strong>
                   <div className="premium-package-benefits">
-                    <span><FaBath aria-hidden="true" />1 banho por mês</span>
+                    <span><FaBath aria-hidden="true" />1 banho por mÃªs</span>
                     <span><FaCut aria-hidden="true" />1 corte de unhas</span>
                   </div>
                 </div>
               </div>
             ) : (
               <div className="fixed-price-note">
-                <span aria-hidden="true">✓</span>
+                <span aria-hidden="true">âœ“</span>
                 <div>
-                  <strong>Preço único para qualquer porte</strong>
-                  <p>O valor deste plano não muda conforme o tamanho do pet.</p>
+                  <strong>PreÃ§o Ãºnico para qualquer porte</strong>
+                  <p>O valor deste plano nÃ£o muda conforme o tamanho do pet.</p>
                 </div>
               </div>
             )}
@@ -1296,9 +1296,9 @@ function CoveragePage({ initialPlanName = "Premium" }) {
             }
           >
             <div className="coverage-waiting-heading">
-              <p className="eyebrow">Benefícios inclusos</p>
-              <h2>Carências simples de entender</h2>
-              <p>Consultas com especialistas e todos os procedimentos com desconto podem ser usados sem carência.</p>
+              <p className="eyebrow">BenefÃ­cios inclusos</p>
+              <h2>CarÃªncias simples de entender</h2>
+              <p>Consultas com especialistas e todos os procedimentos com desconto podem ser usados sem carÃªncia.</p>
             </div>
             <div className="coverage-waiting-grid">
               <article>
@@ -1308,20 +1308,20 @@ function CoveragePage({ initialPlanName = "Premium" }) {
               </article>
               <article>
                 <span>02</span>
-                <strong>Plantão, urgência e emergência</strong>
+                <strong>PlantÃ£o, urgÃªncia e emergÃªncia</strong>
                 <b>30 dias</b>
               </article>
               <article>
                 <span>03</span>
-                <strong>{selectedPlan.cat ? "Raiva e vacinas felinas" : "Raiva, V10 e Quíntupla"}</strong>
+                <strong>{selectedPlan.cat ? "Raiva e vacinas felinas" : "Raiva, V10 e QuÃ­ntupla"}</strong>
                 <b>60 dias</b>
               </article>
               {(selectedPlan.shortName === "Premium" || selectedPlan.cat) && (
                 <article className="castration-waiting-card">
-                  <span>{selectedPlan.cat ? "04 • CAT PREMIUM" : "04 • PREMIUM"}</span>
-                  <strong>Castração: procedimento + anestesia inclusos</strong>
+                  <span>{selectedPlan.cat ? "04 â€¢ CAT PREMIUM" : "04 â€¢ PREMIUM"}</span>
+                  <strong>CastraÃ§Ã£o: procedimento + anestesia inclusos</strong>
                   <b>180 dias</b>
-                  <small>Internação e medicamentos: 20% OFF</small>
+                  <small>InternaÃ§Ã£o e medicamentos: 20% OFF</small>
                 </article>
               )}
             </div>
@@ -1333,7 +1333,7 @@ function CoveragePage({ initialPlanName = "Premium" }) {
               <h2>Confira os {coverageCategories.reduce((sum, item) => sum + item.procedures.length, 0)} procedimentos</h2>
             </div>
             <label className="coverage-search">
-              <span aria-hidden="true">⌕</span>
+              <span aria-hidden="true">âŒ•</span>
               <input
                 type="search"
                 value={search}
@@ -1345,8 +1345,8 @@ function CoveragePage({ initialPlanName = "Premium" }) {
           </div>
 
           <div className="coverage-legend" aria-label="Legenda da cobertura">
-            <span><i className="included" /> Incluso com carência</span>
-            <span><i className="discount" /> {selectedPlan.procedureDiscount}% de desconto sem carência</span>
+            <span><i className="included" /> Incluso com carÃªncia</span>
+            <span><i className="discount" /> {selectedPlan.procedureDiscount}% de desconto sem carÃªncia</span>
             <b>{visibleCount} {visibleCount === 1 ? "resultado" : "resultados"}</b>
           </div>
 
@@ -1365,12 +1365,12 @@ function CoveragePage({ initialPlanName = "Premium" }) {
                   <table>
                     <thead>
                       {category.id === "estetica" ? (
-                        <tr><th>Serviço</th><th>Seu benefício</th></tr>
+                        <tr><th>ServiÃ§o</th><th>Seu benefÃ­cio</th></tr>
                       ) : (
                         <tr>
                           <th>Procedimento</th>
-                          <th>Seu benefício</th>
-                          <th>Carência</th>
+                          <th>Seu benefÃ­cio</th>
+                          <th>CarÃªncia</th>
                         </tr>
                       )}
                     </thead>
@@ -1404,9 +1404,9 @@ function CoveragePage({ initialPlanName = "Premium" }) {
           <div className="coverage-disclaimer">
             <strong>Importante</strong>
             <p>
-              A indicação de exames e procedimentos depende de avaliação veterinária.
-              Benefícios, regras de utilização e disponibilidade devem ser confirmados
-              no regulamento do Pet Club no momento da contratação.
+              A indicaÃ§Ã£o de exames e procedimentos depende de avaliaÃ§Ã£o veterinÃ¡ria.
+              BenefÃ­cios, regras de utilizaÃ§Ã£o e disponibilidade devem ser confirmados
+              no regulamento do Pet Club no momento da contrataÃ§Ã£o.
             </p>
           </div>
           {!selectedPlan.cat && <PlanComparison />}
@@ -1423,12 +1423,12 @@ function Testimonials() {
       <div className="container testimonials-heading">
         <p className="eyebrow">Depoimentos</p>
         <h2>Quem ama e assina embaixo</h2>
-        <p>Histórias reais de tutores que amam e cuidam dos seus pets como se fossem filhos.</p>
+        <p>HistÃ³rias reais de tutores que amam e cuidam dos seus pets como se fossem filhos.</p>
       </div>
       <AutoCarousel
         items={testimonials}
         type="testimonial"
-        label="Depoimentos em apresentação automática"
+        label="Depoimentos em apresentaÃ§Ã£o automÃ¡tica"
       />
     </section>
   );
@@ -1439,10 +1439,10 @@ function FAQ() {
     <section className="faq-section" id="contato">
       <div className="container faq-grid">
         <div className="faq-copy">
-          <h2>Tem dúvidas ou precisa de ajuda?</h2>
+          <h2>Tem dÃºvidas ou precisa de ajuda?</h2>
           <p>
-            Nossos veterinários estão sempre a sua disposição. Clique no botão abaixo e
-            fale agora com um veterinário de plantão.
+            Nossos veterinÃ¡rios estÃ£o sempre a sua disposiÃ§Ã£o. Clique no botÃ£o abaixo e
+            fale agora com um veterinÃ¡rio de plantÃ£o.
           </p>
           <div className="faq-actions">
             <a className="button whatsapp" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
@@ -1472,16 +1472,16 @@ function FAQ() {
 function Footer() {
   const [status, setStatus] = useState("");
   const footerLinks = [
-    ["Início", "#inicio"],
+    ["InÃ­cio", "#inicio"],
     ["Hospital", "#hospital"],
     ["Estrutura", "#estrutura"],
-    ["Serviços", "#servicos"],
+    ["ServiÃ§os", "#servicos"],
     ["Equipe", "#equipe"],
     ["Especialidades", "#especialidades"],
     ["Planos Pet Club", "#planos"],
     ["Cobertura dos planos", "#cobertura"],
     ["Depoimentos", "#depoimentos"],
-    ["Dúvidas e contato", "#contato"],
+    ["DÃºvidas e contato", "#contato"],
   ];
   const socialLinks = [
     { label: "Instagram", href: "https://www.instagram.com/cuidary.oficial/", icon: FaInstagram },
@@ -1502,7 +1502,7 @@ function Footer() {
           <p>Inscreva-se para receber as novidades!</p>
           <form onSubmit={subscribe}>
             <input type="email" required placeholder="Seu e-mail" aria-label="Seu e-mail" />
-            <button type="submit">Inscrever <span aria-hidden="true">›</span></button>
+            <button type="submit">Inscrever <span aria-hidden="true">â€º</span></button>
           </form>
           <div className="subscribe-status" role="status">{status}</div>
           <div className="socials">
@@ -1517,7 +1517,7 @@ function Footer() {
           <h3>Contatos</h3>
           <a className="contact-item" href={GOOGLE_MAPS_URL} target="_blank" rel="noreferrer">
             <FaMapMarkerAlt aria-hidden="true" />
-            <span><strong>Endereço</strong>{ADDRESS}</span>
+            <span><strong>EndereÃ§o</strong>{ADDRESS}</span>
           </a>
           <a className="contact-item" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
             <FaWhatsapp aria-hidden="true" />
@@ -1528,8 +1528,8 @@ function Footer() {
             <span><strong>CNPJ</strong>{CNPJ}</span>
           </div>
         </div>
-        <nav className="footer-navigation" aria-label="Navegação do rodapé">
-          <h3>Navegação</h3>
+        <nav className="footer-navigation" aria-label="NavegaÃ§Ã£o do rodapÃ©">
+          <h3>NavegaÃ§Ã£o</h3>
           <div className="footer-links">
             {footerLinks.map(([label, href]) => (
               <a href={href} key={label}>{label}</a>
@@ -1544,7 +1544,7 @@ function Footer() {
         </div>
       </div>
       <div className="copyright">
-        © {new Date().getFullYear()} Hospital Veterinário Cuidary. Todos os direitos reservados.
+        Â© {new Date().getFullYear()} Hospital VeterinÃ¡rio Cuidary. Todos os direitos reservados.
       </div>
     </footer>
   );
