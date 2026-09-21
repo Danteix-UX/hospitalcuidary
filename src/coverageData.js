@@ -290,7 +290,7 @@ export const premiumSizeOptions = [
     label: "Pequeno",
     hint: "até 10 kg",
     image: "pet-size-small.png",
-    monthly: 249.9,
+    monthly: 249,
     annual: 2699,
   },
   {

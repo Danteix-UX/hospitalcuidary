@@ -2412,10 +2412,11 @@ p {
 .pet-size-options {
   display: grid;
   gap: 12px;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 }
 
-.pet-size-options button {
+.pet-size-options button,
+.pet-size-cat-card {
   position: relative;
   display: grid;
   min-width: 0;
@@ -2425,9 +2426,12 @@ p {
   padding: 18px 14px 14px 20px;
   border: 2px solid transparent;
   border-radius: 24px;
-  cursor: pointer;
   grid-template-columns: minmax(0, 1fr) 94px;
   text-align: left;
+}
+
+.pet-size-options button {
+  cursor: pointer;
   transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
 }
 
@@ -2437,6 +2441,24 @@ p {
 }
 
 .pet-size-options .cat .pet-size-image {
+  background: #c967c9;
+}
+
+.cat-premium-panel {
+  grid-template-columns: minmax(250px, 0.75fr) minmax(260px, 0.8fr);
+  justify-content: start;
+}
+
+.pet-size-options.cat-only {
+  grid-template-columns: minmax(260px, 360px);
+}
+
+.pet-size-cat-card {
+  color: white;
+  background: #E37BE3;
+}
+
+.pet-size-cat-card .pet-size-image {
   background: #c967c9;
 }
 
@@ -2546,7 +2568,8 @@ p {
   transition: 180ms ease;
 }
 
-.pet-size-options button.active .pet-size-selected {
+.pet-size-options button.active .pet-size-selected,
+.pet-size-selected.visible {
   opacity: 1;
   transform: scale(1);
 }
@@ -3507,7 +3530,8 @@ p {
     grid-template-columns: 1fr;
   }
 
-  .pet-size-options button {
+  .pet-size-options button,
+  .pet-size-cat-card {
     min-height: 138px;
     grid-template-columns: minmax(0, 1fr) 112px;
   }

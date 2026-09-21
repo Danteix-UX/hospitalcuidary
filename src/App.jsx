@@ -143,19 +143,10 @@ const plans = [
   {
     name: "Plano Premium",
     shortName: "Premium",
-    monthly: 249.9,
+    monthly: 249,
     annual: 2699,
     procedureDiscount: 20,
     featured: true,
-    discounts: ["Incluso", "Incluso", "Incluso", "20% OFF"],
-  },
-  {
-    name: "Cat Premium",
-    shortName: "Cat Premium",
-    monthly: 117,
-    annual: 1264,
-    procedureDiscount: 20,
-    cat: true,
     discounts: ["Incluso", "Incluso", "Incluso", "20% OFF"],
   },
   {
@@ -166,6 +157,15 @@ const plans = [
     procedureDiscount: 15,
     discounts: ["Incluso", "Incluso", "Incluso", "15% OFF"],
   },
+  {
+    name: "Cat Premium",
+    shortName: "Cat Premium",
+    monthly: 117,
+    annual: 1264,
+    procedureDiscount: 20,
+    cat: true,
+    discounts: ["Incluso", "Incluso", "Incluso", "20% OFF"],
+  },
 ];
 
 const planComparisonRows = [
@@ -174,7 +174,7 @@ const planComparisonRows = [
     values: {
       Basic: { text: "R$ 37/mês", tone: "price" },
       Essencial: { text: "R$ 57/mês", tone: "price" },
-      Premium: { text: "A partir de R$ 249,90/mês", tone: "price" },
+      Premium: { text: "A partir de R$ 249/mês", tone: "price" },
     },
   },
   {
@@ -743,7 +743,7 @@ function PlanCard({ plan, billing }) {
     <article className={plan.featured ? "plan-card featured" : "plan-card"}>
       {plan.featured && <span className="recommended">Indicado</span>}
       <h3>{plan.name}</h3>
-      <p className="plan-subtitle">Para crescer com controle</p>
+      <p className="plan-subtitle">{plan.cat ? "Plano exclusivo para gatos" : "Para crescer com controle"}</p>
       <div className="price">
         {plan.featured && <small>a partir</small>}
         <span className="currency">R$</span>
@@ -1201,25 +1201,14 @@ function CoveragePage({ initialPlanName = "Premium" }) {
               </a>
             </div>
 
-            {selectedPlan.shortName === "Premium" || selectedPlan.cat ? (
+            {selectedPlan.shortName === "Premium" ? (
               <div className="premium-size-panel">
                 <div className="premium-size-copy">
                   <span className="premium-label">Premium completo</span>
-                  <h3>Gato ou qual é o porte do seu cão?</h3>
-                  <p>O <strong>Cat Premium</strong> tem valor único. Para cães, o Premium inclui 4 banhos por mês e o valor acompanha o porte.</p>
+                  <h3>Qual é o porte do seu pet?</h3>
+                  <p>O Premium inclui <strong>4 banhos por mês</strong>. Por isso, o valor acompanha o porte do cão.</p>
                 </div>
-                <div className="pet-size-options" role="radiogroup" aria-label="Tipo e porte do pet">
-                  <button
-                    className={`cat${selectedPlan.cat ? " active" : ""}`}
-                    type="button"
-                    role="radio"
-                    aria-checked={selectedPlan.cat}
-                    onClick={() => selectPlan("Cat Premium")}
-                  >
-                    <span className="pet-size-copy"><strong>Gato</strong><small>valor único</small><b>R$ 117/mês</b></span>
-                    <span className="pet-size-image" aria-hidden="true"><img src={`${ASSET}/pet-size-cat.png`} alt="" /></span>
-                    <span className="pet-size-selected" aria-hidden="true">✓</span>
-                  </button>
+                <div className="pet-size-options" role="radiogroup" aria-label="Porte do pet">
                   {premiumSizeOptions.map((size) => (
                     <button
                       className={`${size.id}${selectedSize.id === size.id ? " active" : ""}`}
@@ -1227,7 +1216,7 @@ function CoveragePage({ initialPlanName = "Premium" }) {
                       type="button"
                       role="radio"
                       aria-checked={selectedSize.id === size.id}
-                      onClick={() => { setSelectedSizeId(size.id); if (selectedPlan.cat) selectPlan("Premium"); }}
+                      onClick={() => setSelectedSizeId(size.id)}
                     >
                       <span className="pet-size-copy">
                         <strong>{size.label}</strong>
@@ -1247,15 +1236,41 @@ function CoveragePage({ initialPlanName = "Premium" }) {
                     Seu pacote de estética
                   </strong>
                   <div className="premium-package-benefits">
-                    {selectedPlan.cat ? (<>
-                      <span><FaBath aria-hidden="true" />1 banho por mês</span>
-                      <span><FaCut aria-hidden="true" />1 corte de unhas</span>
-                      <span><FaCalendarCheck aria-hidden="true" />Transporte incluso</span>
-                    </>) : (<>
-                      <span><FaBath aria-hidden="true" />4 banhos por mês</span>
-                      <span><FaCut aria-hidden="true" />Corte de unhas incluso</span>
-                      <span><FaCalendarCheck aria-hidden="true" />Limpeza de ouvido inclusa</span>
-                    </>)}
+                    <span><FaBath aria-hidden="true" />4 banhos por mês</span>
+                    <span><FaCut aria-hidden="true" />Corte de unhas incluso</span>
+                    <span><FaCalendarCheck aria-hidden="true" />Limpeza de ouvido inclusa</span>
+                  </div>
+                </div>
+              </div>
+            ) : selectedPlan.cat ? (
+              <div className="premium-size-panel cat-premium-panel">
+                <div className="premium-size-copy">
+                  <span className="premium-label">Exclusivo para gatos</span>
+                  <h3>Cat Premium</h3>
+                  <p>Um plano pensado só para gatos, com <strong>valor único de R$ 117/mês</strong> e benefícios felinos sem mistura com os planos para cães.</p>
+                </div>
+                <div className="pet-size-options cat-only" aria-label="Plano exclusivo para gatos">
+                  <div className="pet-size-cat-card">
+                    <span className="pet-size-copy">
+                      <strong>Gato</strong>
+                      <small>valor único</small>
+                      <b>R$ 117/mês</b>
+                    </span>
+                    <span className="pet-size-image" aria-hidden="true">
+                      <img src={`${ASSET}/pet-size-cat.png`} alt="" />
+                    </span>
+                    <span className="pet-size-selected visible" aria-hidden="true">✓</span>
+                  </div>
+                </div>
+                <div className="premium-package-note">
+                  <strong className="premium-package-title">
+                    <img src={`${ASSET}/brand-heart.svg`} alt="" />
+                    Seu pacote de estética
+                  </strong>
+                  <div className="premium-package-benefits">
+                    <span><FaBath aria-hidden="true" />1 banho por mês</span>
+                    <span><FaCut aria-hidden="true" />1 corte de unhas</span>
+                    <span><FaCalendarCheck aria-hidden="true" />Transporte incluso</span>
                   </div>
                 </div>
               </div>
@@ -1302,7 +1317,7 @@ function CoveragePage({ initialPlanName = "Premium" }) {
               </article>
               {(selectedPlan.shortName === "Premium" || selectedPlan.cat) && (
                 <article className="castration-waiting-card">
-                  <span>04 • PREMIUM</span>
+                  <span>{selectedPlan.cat ? "04 • CAT PREMIUM" : "04 • PREMIUM"}</span>
                   <strong>Castração: procedimento + anestesia inclusos</strong>
                   <b>180 dias</b>
                   <small>Internação e medicamentos: 20% OFF</small>
