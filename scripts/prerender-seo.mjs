@@ -74,6 +74,7 @@ const routeEntries = [
         "@type": "Person",
         name: page.name,
         jobTitle: page.role,
+        image: `${SEO_BASE_URL}/assets/${page.image}`,
         worksFor: { "@id": `${SEO_BASE_URL}/#hospital` },
       },
     ],

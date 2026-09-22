@@ -722,14 +722,26 @@ function Team() {
                   key={`${member.name}-${index}`}
                   aria-hidden={duplicate ? "true" : undefined}
                 >
-                  <img
-                    src={`${ASSET}/${member.image}`}
-                    alt={duplicate ? "" : member.name}
-                  />
+                  {duplicate ? (
+                    <img
+                      src={`${ASSET}/${member.image}`}
+                      alt=""
+                    />
+                  ) : (
+                    <a
+                      className="team-photo-link"
+                      href={member.slug}
+                      aria-label={`Abrir perfil de ${member.name}`}
+                    >
+                      <img
+                        src={`${ASSET}/${member.image}`}
+                        alt={member.name}
+                      />
+                    </a>
+                  )}
                   <div className="team-label liquid-glass glass-clear">
                     <strong>{member.name}</strong>
                     <span>{member.role}</span>
-                    {!duplicate && <a className="team-profile-link" href={member.slug}>Ver perfil</a>}
                   </div>
                 </article>
               );
@@ -1564,6 +1576,13 @@ function TeamSeoPage({ page }) {
       </section>
       <main className="seo-page-main">
         <div className="container seo-team-profile">
+          <div className="seo-team-photo-wrap">
+            <img
+              className="seo-team-photo"
+              src={`${ASSET}/${page.image}`}
+              alt={page.name}
+            />
+          </div>
           <article>
             <h2>Atendimento na Cuidary</h2>
             <p>{page.name} integra a equipe da Cuidary em Entre Rios de Minas. Esta página reúne as informações profissionais publicadas pelo hospital.</p>
@@ -1798,6 +1817,7 @@ export default function App() {
         {
           "@context": "https://schema.org", "@type": "Person",
           name: teamPage.name, jobTitle: teamPage.role,
+          image: `${SEO_BASE_URL}${ASSET}/${teamPage.image}`,
           worksFor: { "@type": "VeterinaryCare", name: "Cuidary - Hospital Veterinário 24 horas" },
         },
       ],

@@ -189,9 +189,9 @@ export const planSeo = {
 };
 
 export const teamPages = [
-  { slug: "equipe/dra-magna-colares", title: "Dra. Magna Colares | Equipe Cuidary", description: "Conheça a Dra. Magna Colares, médica-veterinária da equipe Cuidary em Entre Rios de Minas.", name: "Dra. Magna Colares", role: "Médica-veterinária", credential: "CRMV 23577" },
-  { slug: "equipe/dr-lucas-fiusa", title: "Dr. Lucas Fiusa | Equipe Cuidary", description: "Conheça o Dr. Lucas Fiusa, médico-veterinário da equipe Cuidary em Entre Rios de Minas.", name: "Dr. Lucas Fiusa", role: "Médico-veterinário", credential: "CRMV 28445043" },
-  { slug: "equipe/isadora-resende", title: "Isadora Resende | Equipe Cuidary", description: "Conheça Isadora Resende, gerente administrativa da Cuidary em Entre Rios de Minas.", name: "Isadora Resende", role: "Gerente Administrativa", credential: "" },
+  { slug: "equipe/dra-magna-colares", title: "Dra. Magna Colares | Equipe Cuidary", description: "Conheça a Dra. Magna Colares, médica-veterinária da equipe Cuidary em Entre Rios de Minas.", name: "Dra. Magna Colares", role: "Médica-veterinária", credential: "CRMV 23577", image: "staff-magna.png" },
+  { slug: "equipe/dr-lucas-fiusa", title: "Dr. Lucas Fiusa | Equipe Cuidary", description: "Conheça o Dr. Lucas Fiusa, médico-veterinário da equipe Cuidary em Entre Rios de Minas.", name: "Dr. Lucas Fiusa", role: "Médico-veterinário", credential: "CRMV 28445043", image: "staff-lucas.png" },
+  { slug: "equipe/isadora-resende", title: "Isadora Resende | Equipe Cuidary", description: "Conheça Isadora Resende, gerente administrativa da Cuidary em Entre Rios de Minas.", name: "Isadora Resende", role: "Gerente Administrativa", credential: "", image: "staff-isadora.png" },
 ];
 
 export const allSeoRoutes = [
