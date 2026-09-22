@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "seo": "node scripts/make-sitemap.mjs",
+    "build": "node scripts/make-sitemap.mjs && vite build && node scripts/prerender-seo.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

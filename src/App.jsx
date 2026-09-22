@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa";
 import { SiWaze } from "react-icons/si";
 import { coverageCategories, premiumSizeOptions } from "./coverageData";
+import { SEO_BASE_URL, planSeo, seoPages, teamPages } from "./seoData";
 
 const ASSET = "/assets";
 const WHATSAPP_NUMBER = "553199116515";
@@ -27,6 +28,80 @@ const PETCLUB_DONATION_URL = buildWhatsAppUrl(
 );
 const GOOGLE_MAPS_URL = "https://www.google.com/maps/place/Cuidary+-+Hospital+Veterin%C3%A1rio+24+horas/@-20.6744341,-44.0668394,1384m/data=!3m1!1e3!4m6!3m5!1s0xa16ddd87db6107:0xdc00b321d6ce76b0!8m2!3d-20.672873!4d-44.064612!16s%2Fg%2F11nvvbs1vf?hl=pt_BR&entry=ttu&g_ep=EgoyMDI2MDkyMC4wIKXMDSoASAFQAw%3D%3D";
 const WAZE_URL = `https://waze.com/ul?q=${encodeURIComponent(ADDRESS)}&navigate=yes&utm_source=cuidary_site`;
+const INSTAGRAM_URL = "https://www.instagram.com/cuidary.oficial/";
+
+const planSlugByName = {
+  Basic: "basic",
+  Premium: "premium",
+  Essencial: "essencial",
+  "Cat Premium": "cat-premium",
+};
+
+const upsertMeta = (selector, attributes) => {
+  let element = document.head.querySelector(selector);
+  if (!element) {
+    element = document.createElement(attributes.tag || "meta");
+    document.head.appendChild(element);
+  }
+  Object.entries(attributes).forEach(([key, value]) => {
+    if (key !== "tag") element.setAttribute(key, value);
+  });
+  return element;
+};
+
+function useSeoMetadata({ title, description, path = "/", schema = [] }) {
+  useEffect(() => {
+    const canonicalUrl = `${SEO_BASE_URL}${path === "/" ? "" : path}`;
+    document.title = title;
+    upsertMeta('meta[name="description"]', { name: "description", content: description });
+    upsertMeta('meta[property="og:title"]', { property: "og:title", content: title });
+    upsertMeta('meta[property="og:description"]', { property: "og:description", content: description });
+    upsertMeta('meta[property="og:type"]', { property: "og:type", content: "website" });
+    upsertMeta('meta[property="og:url"]', { property: "og:url", content: canonicalUrl });
+    upsertMeta('meta[name="twitter:card"]', { name: "twitter:card", content: "summary_large_image" });
+    let canonical = document.head.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      document.head.appendChild(canonical);
+    }
+    canonical.href = canonicalUrl;
+    document.querySelectorAll('script[data-cuidary-schema="true"]').forEach((node) => node.remove());
+    schema.forEach((entry) => {
+      const script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.dataset.cuidarySchema = "true";
+      script.textContent = JSON.stringify(entry);
+      document.head.appendChild(script);
+    });
+  }, [title, description, path, JSON.stringify(schema)]);
+}
+
+const veterinarySchema = (path = "/") => ({
+  "@context": "https://schema.org",
+  "@type": "VeterinaryCare",
+  name: "Cuidary - Hospital Veterinário 24 horas",
+  url: `${SEO_BASE_URL}${path === "/" ? "" : path}`,
+  telephone: "+55 31 9911-6515",
+  taxID: CNPJ,
+  hasMap: GOOGLE_MAPS_URL,
+  sameAs: [INSTAGRAM_URL],
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "R. Nossa Sra. das Brotas, 179",
+    addressLocality: "Entre Rios de Minas",
+    addressRegion: "MG",
+    postalCode: "35490-000",
+    addressCountry: "BR",
+  },
+  geo: { "@type": "GeoCoordinates", latitude: -20.672873, longitude: -44.064612 },
+  openingHoursSpecification: [{
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    opens: "00:00",
+    closes: "23:59",
+  }],
+});
 
 const gallery = [
   ["estrutura-consultorio-01.png", "Consultório 01"],
@@ -45,22 +120,26 @@ const services = [
     title: "Hospital 24 Horas",
     text: "Atendimento 24h por dia 7 dias por semana.",
     icon: "service-stethoscope.png",
+    href: "/hospital-veterinario-24-horas-entre-rios-de-minas",
     light: true,
   },
   {
     title: "Exames & Raio X",
     text: "Resultado imediato sem precisar sair da cidade",
     icon: "service-lightning.png",
+    href: "/exames-veterinarios-entre-rios-de-minas",
   },
   {
     title: "Cirurgia e Internação",
     text: "Ambiente equipado para que seu pet seja bem atendido",
     icon: "service-care.png",
+    href: "/cirurgia-veterinaria-entre-rios-de-minas",
   },
   {
     title: "Banho & Tosa",
     text: "Seu pet sempre limpinho e cheiroso",
     icon: "service-cloud.png",
+    href: "/banho-e-tosa-entre-rios-de-minas",
     light: true,
   },
 ];
@@ -70,16 +149,19 @@ const team = [
     image: "staff-magna.png",
     name: "Dra. Magna Colares",
     role: "CRMV 23577",
+    slug: "/equipe/dra-magna-colares",
   },
   {
     image: "staff-lucas.png",
     name: "Dr. Lucas Fiusa",
     role: "CRMV 28445043",
+    slug: "/equipe/dr-lucas-fiusa",
   },
   {
     image: "staff-isadora.png",
     name: "Isadora Resende",
     role: "Gerente Administrativa",
+    slug: "/equipe/isadora-resende",
   },
 ];
 
@@ -467,17 +549,17 @@ function Header() {
 
   return (
     <header className="site-header">
-      <a href="#inicio" aria-label="Ir para o início">
+      <a href="/#inicio" aria-label="Ir para o início">
         <Logo className="header-logo" />
       </a>
       <nav className={open ? "nav open" : "nav"} aria-label="Navegação principal">
-        <a href="#hospital" onClick={() => setOpen(false)}>Hospital</a>
-        <a href="#estrutura" onClick={() => setOpen(false)}>Estrutura</a>
-        <a href="#servicos" onClick={() => setOpen(false)}>Serviços</a>
-        <a href="#especialidades" onClick={() => setOpen(false)}>Especialidades</a>
-        <a href="#planos" onClick={() => setOpen(false)}>Pet Club</a>
+        <a href="/#hospital" onClick={() => setOpen(false)}>Hospital</a>
+        <a href="/#estrutura" onClick={() => setOpen(false)}>Estrutura</a>
+        <a href="/#servicos" onClick={() => setOpen(false)}>Serviços</a>
+        <a href="/#especialidades" onClick={() => setOpen(false)}>Especialidades</a>
+        <a href="/#planos" onClick={() => setOpen(false)}>Pet Club</a>
       </nav>
-      <a className="client-button" href="#cuidaryclub">Área do cliente</a>
+      <a className="client-button" href="/#cuidaryclub">Área do cliente</a>
       <button
         className={open ? "menu-button active" : "menu-button"}
         type="button"
@@ -540,7 +622,7 @@ function Structure() {
             tratamento, procedimentos cirúrgicos e internação, conforme a
             necessidade de cada paciente.
           </p>
-          <Button>Agendar uma consulta</Button>
+          <Button href="/consulta-veterinaria-entre-rios-de-minas">Agendar uma consulta</Button>
         </div>
       </div>
 
@@ -573,7 +655,7 @@ function Services() {
             pacientes, melhores condições de trabalho para a equipe e mais
             segurança durante os atendimentos.
           </p>
-          <Button>Agendar uma consulta</Button>
+          <Button href="/consulta-veterinaria-entre-rios-de-minas">Agendar uma consulta</Button>
         </div>
         <div className="service-cards">
           {services.map((service) => (
@@ -583,6 +665,7 @@ function Services() {
               </div>
               <h3>{service.title}</h3>
               <p>{service.text}</p>
+              <a className="service-seo-link" href={service.href}>Saiba mais</a>
             </article>
           ))}
         </div>
@@ -646,6 +729,7 @@ function Team() {
                   <div className="team-label liquid-glass glass-clear">
                     <strong>{member.name}</strong>
                     <span>{member.role}</span>
+                    {!duplicate && <a className="team-profile-link" href={member.slug}>Ver perfil</a>}
                   </div>
                 </article>
               );
@@ -774,7 +858,7 @@ function PlanCard({ plan, billing }) {
       </ul>
       <a
         className="coverage-link"
-        href={`#cobertura?plano=${plan.shortName.toLowerCase()}`}
+        href={`/planos/${planSlugByName[plan.shortName]}`}
         aria-label={`Conferir cobertura do ${plan.name}`}
       >
         Conferir Cobertura
@@ -1115,11 +1199,9 @@ function CoveragePage({ initialPlanName = "Premium" }) {
 
   const selectPlan = (planName) => {
     setSelectedPlanName(planName);
-    window.history.replaceState(
-      null,
-      "",
-      `#cobertura?plano=${planName.toLowerCase()}`,
-    );
+    const slug = planSlugByName[planName] || "premium";
+    window.history.pushState(null, "", `/planos/${slug}`);
+    window.dispatchEvent(new PopStateEvent("popstate"));
   };
 
   return (
@@ -1137,7 +1219,7 @@ function CoveragePage({ initialPlanName = "Premium" }) {
 
       <main className="coverage-main" id="cobertura-detalhes">
         <section className="coverage-intro container">
-          <a className="coverage-back" href="#planos">← Voltar para os planos</a>
+          <a className="coverage-back" href="/#planos">← Voltar para os planos</a>
           <div className="coverage-heading">
             <div>
               <p className="eyebrow">Cobertura Pet Club</p>
@@ -1417,6 +1499,84 @@ function CoveragePage({ initialPlanName = "Premium" }) {
   );
 }
 
+
+function SeoLandingPage({ page }) {
+  const related = seoPages.filter((item) => item.slug !== page.slug).slice(0, 6);
+  return (
+    <>
+      <section className="seo-page-hero">
+        <Header />
+        <div className="container seo-page-hero-inner">
+          <nav className="seo-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Início</a><span>›</span><span>{page.h1}</span>
+          </nav>
+          <p className="eyebrow">Cuidary • Entre Rios de Minas</p>
+          <h1>{page.h1}</h1>
+          <p className="seo-lead">{page.lead}</p>
+          <div className="seo-hero-actions">
+            <a className="button whatsapp" href={WHATSAPP_URL} target="_blank" rel="noreferrer"><FaWhatsapp aria-hidden="true" /> Falar no WhatsApp</a>
+            <a className="button maps" href={GOOGLE_MAPS_URL} target="_blank" rel="noreferrer"><FaMapMarkerAlt aria-hidden="true" /> Como chegar</a>
+          </div>
+        </div>
+      </section>
+      <main className="seo-page-main">
+        <div className="container seo-content-grid">
+          <article className="seo-article">
+            {page.sections.map(([heading, body]) => (
+              <section key={heading}><h2>{heading}</h2><p>{body}</p></section>
+            ))}
+            <aside className="seo-local-box">
+              <strong>Cuidary • Hospital Veterinário 24 horas</strong>
+              <p>{ADDRESS}</p>
+              <a href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp: +55 31 9911-6515</a>
+            </aside>
+            <section className="seo-faq">
+              <p className="eyebrow">Perguntas frequentes</p>
+              <h2>Dúvidas rápidas</h2>
+              {page.faq.map(([question, answer]) => (
+                <details key={question}><summary>{question}</summary><p>{answer}</p></details>
+              ))}
+            </section>
+          </article>
+          <aside className="seo-sidebar">
+            <strong>Serviços relacionados</strong>
+            {related.map((item) => <a href={`/${item.slug}`} key={item.slug}>{item.h1}</a>)}
+            <a className="seo-plan-link" href="/planos/premium">Conhecer o Pet Club</a>
+          </aside>
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
+}
+
+function TeamSeoPage({ page }) {
+  return (
+    <>
+      <section className="seo-page-hero team-seo-hero">
+        <Header />
+        <div className="container seo-page-hero-inner">
+          <nav className="seo-breadcrumb" aria-label="Breadcrumb"><a href="/">Início</a><span>›</span><a href="/#equipe">Equipe</a><span>›</span><span>{page.name}</span></nav>
+          <p className="eyebrow">Equipe Cuidary</p>
+          <h1>{page.name}</h1>
+          <p className="seo-lead">{page.role}{page.credential ? ` • ${page.credential}` : ""}</p>
+        </div>
+      </section>
+      <main className="seo-page-main">
+        <div className="container seo-team-profile">
+          <article>
+            <h2>Atendimento na Cuidary</h2>
+            <p>{page.name} integra a equipe da Cuidary em Entre Rios de Minas. Esta página reúne as informações profissionais publicadas pelo hospital.</p>
+            {page.credential && <p><strong>Registro informado:</strong> {page.credential}</p>}
+            <a className="button whatsapp" href={WHATSAPP_URL} target="_blank" rel="noreferrer"><FaWhatsapp aria-hidden="true" /> Falar com a equipe</a>
+          </article>
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
+}
+
 function Testimonials() {
   return (
     <section className="testimonials" id="depoimentos">
@@ -1469,22 +1629,45 @@ function FAQ() {
   );
 }
 
+function SeoDiscovery() {
+  const featuredPages = seoPages.slice(0, 8);
+  return (
+    <section className="seo-discovery">
+      <div className="container">
+        <p className="eyebrow">Informações úteis</p>
+        <h2>Saúde veterinária em Entre Rios de Minas</h2>
+        <p className="seo-discovery-intro">
+          Conteúdos diretos sobre atendimento, prevenção e serviços veterinários da Cuidary.
+        </p>
+        <div className="seo-discovery-grid">
+          {featuredPages.map((page) => (
+            <a href={`/${page.slug}`} key={page.slug}>
+              <strong>{page.h1}</strong>
+              <span>Ver informações</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Footer() {
   const [status, setStatus] = useState("");
   const footerLinks = [
-    ["Início", "#inicio"],
-    ["Hospital", "#hospital"],
-    ["Estrutura", "#estrutura"],
-    ["Serviços", "#servicos"],
-    ["Equipe", "#equipe"],
-    ["Especialidades", "#especialidades"],
-    ["Planos Pet Club", "#planos"],
-    ["Cobertura dos planos", "#cobertura"],
-    ["Depoimentos", "#depoimentos"],
-    ["Dúvidas e contato", "#contato"],
+    ["Início", "/#inicio"],
+    ["Hospital", "/#hospital"],
+    ["Estrutura", "/#estrutura"],
+    ["Serviços", "/#servicos"],
+    ["Equipe", "/#equipe"],
+    ["Especialidades", "/#especialidades"],
+    ["Planos Pet Club", "/#planos"],
+    ["Cobertura dos planos", "/planos/premium"],
+    ["Depoimentos", "/#depoimentos"],
+    ["Dúvidas e contato", "/#contato"],
   ];
   const socialLinks = [
-    { label: "Instagram", href: "https://www.instagram.com/cuidary.oficial/", icon: FaInstagram },
+    { label: "Instagram", href: INSTAGRAM_URL, icon: FaInstagram },
     { label: "WhatsApp", href: WHATSAPP_URL, icon: FaWhatsapp },
   ];
 
@@ -1566,50 +1749,106 @@ function FloatingWhatsApp() {
 }
 
 export default function App() {
-  const [route, setRoute] = useState(window.location.hash || "#inicio");
+  const [locationKey, setLocationKey] = useState(`${window.location.pathname}${window.location.search}${window.location.hash}`);
+  const route = window.location.hash || "#inicio";
+  const pathname = window.location.pathname.replace(/\/+$/, "") || "/";
 
   useEffect(() => {
-    const syncRoute = () => setRoute(window.location.hash || "#inicio");
-
-    window.addEventListener("hashchange", syncRoute);
-    return () => window.removeEventListener("hashchange", syncRoute);
+    const sync = () => setLocationKey(`${window.location.pathname}${window.location.search}${window.location.hash}`);
+    window.addEventListener("hashchange", sync);
+    window.addEventListener("popstate", sync);
+    return () => {
+      window.removeEventListener("hashchange", sync);
+      window.removeEventListener("popstate", sync);
+    };
   }, []);
 
+  const planEntry = Object.entries(planSeo).find(([slug]) => pathname === `/planos/${slug}`);
+  const seoPage = seoPages.find((page) => pathname === `/${page.slug}`);
+  const teamPage = teamPages.find((page) => pathname === `/${page.slug}`);
+
+  let metadata = {
+    title: "Cuidary | Hospital Veterinário 24 Horas em Entre Rios de Minas",
+    description: "Hospital veterinário 24 horas em Entre Rios de Minas com consultas, urgência, emergência, exames, cirurgia, internação e banho e tosa.",
+    path: "/",
+    schema: [veterinarySchema("/")],
+  };
+
+  if (seoPage) {
+    const path = `/${seoPage.slug}`;
+    metadata = {
+      title: seoPage.title, description: seoPage.description, path,
+      schema: [
+        veterinarySchema(path),
+        {
+          "@context": "https://schema.org", "@type": "FAQPage",
+          mainEntity: seoPage.faq.map(([question, answer]) => ({
+            "@type": "Question", name: question,
+            acceptedAnswer: { "@type": "Answer", text: answer },
+          })),
+        },
+      ],
+    };
+  } else if (teamPage) {
+    const path = `/${teamPage.slug}`;
+    metadata = {
+      title: teamPage.title, description: teamPage.description, path,
+      schema: [
+        veterinarySchema(path),
+        {
+          "@context": "https://schema.org", "@type": "Person",
+          name: teamPage.name, jobTitle: teamPage.role,
+          worksFor: { "@type": "VeterinaryCare", name: "Cuidary - Hospital Veterinário 24 horas" },
+        },
+      ],
+    };
+  } else if (planEntry) {
+    const [slug, page] = planEntry;
+    const path = `/planos/${slug}`;
+    metadata = {
+      title: page.title, description: page.description, path,
+      schema: [
+        veterinarySchema(path),
+        {
+          "@context": "https://schema.org", "@type": "Service", name: page.name,
+          provider: { "@type": "VeterinaryCare", name: "Cuidary - Hospital Veterinário 24 horas" },
+          areaServed: { "@type": "City", name: "Entre Rios de Minas" },
+          url: `${SEO_BASE_URL}${path}`,
+        },
+      ],
+    };
+  }
+
+  useSeoMetadata(metadata);
+
   useEffect(() => {
+    if (pathname !== "/") return undefined;
     const targetId = route.replace("#", "").split("?")[0];
     const frame = window.requestAnimationFrame(() => {
       document.getElementById(targetId)?.scrollIntoView({ block: "start" });
     });
     return () => window.cancelAnimationFrame(frame);
-  }, [route]);
+  }, [locationKey, pathname, route]);
+
+  if (planEntry) return <><CoveragePage initialPlanName={planEntry[1].planName} /><FloatingWhatsApp /></>;
+  if (seoPage) return <><SeoLandingPage page={seoPage} /><FloatingWhatsApp /></>;
+  if (teamPage) return <><TeamSeoPage page={teamPage} /><FloatingWhatsApp /></>;
 
   if (route.startsWith("#cobertura")) {
     const planParam = new URLSearchParams(route.split("?")[1] || "").get("plano");
-    const initialPlanName =
-      plans.find((plan) => plan.shortName.toLowerCase() === planParam)?.shortName ||
-      "Premium";
-    return (
-      <>
-        <CoveragePage initialPlanName={initialPlanName} />
-        <FloatingWhatsApp />
-      </>
-    );
+    const initialPlanName = plans.find((plan) => plan.shortName.toLowerCase() === planParam)?.shortName || "Premium";
+    return <><CoveragePage initialPlanName={initialPlanName} /><FloatingWhatsApp /></>;
   }
 
   return (
     <>
       <Hero />
       <main>
-        <Structure />
-        <Services />
-        <CareBanner />
-        <Team />
-        <Club />
-        <Testimonials />
-        <FAQ />
+        <Structure /><Services /><CareBanner /><Team /><Club /><Testimonials /><FAQ /><SeoDiscovery />
       </main>
       <Footer />
       <FloatingWhatsApp />
     </>
   );
 }
+
