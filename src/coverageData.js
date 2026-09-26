@@ -258,13 +258,10 @@ export const coverageCategories = [
     ],
   },
   {
-    id: "hospedagem-pet-sitter",
-    title: "Hospedagem e Pet Sitter",
-    description: "Consulte a disponibilidade e os benefícios para cuidados fora do hospital.",
-    procedures: [
-      "Hospedagem",
-      "Pet Sitter",
-    ],
+    id: "hospedagem",
+    title: "Hospedagem",
+    description: "Consulte a disponibilidade para cuidados fora do hospital.",
+    procedures: ["Hospedagem"],
   },
   {
     id: "estetica",

@@ -205,7 +205,6 @@ const planFeatures = [
   "Telemedicina 24h",
   "Castração",
   "Banho & Tosa",
-  "Pet sitter",
   "Medicamentos",
 ];
 
@@ -325,14 +324,6 @@ const planComparisonRows = [
       Basic: { text: "10% OFF", tone: "discount" },
       Essencial: { text: "15% OFF", tone: "discount" },
       Premium: { text: "4 banhos + 1 tosa/mês", tone: "premium" },
-    },
-  },
-  {
-    label: "Pet Sitter",
-    values: {
-      Basic: { text: "10% OFF", tone: "discount" },
-      Essencial: { text: "15% OFF", tone: "discount" },
-      Premium: { text: "20% OFF", tone: "discount" },
     },
   },
   {
