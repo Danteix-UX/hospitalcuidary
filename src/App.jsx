@@ -385,8 +385,9 @@ const faqs = [
   ["Posso testar antes de pagar?", "Fale com a nossa equipe para conhecer as condições atuais e escolher o plano ideal para o seu pet."],
 ];
 
-function Logo({ className = "" }) {
-  return <img className={className} src={`${ASSET}/logo.svg`} alt="Cuidary" />;
+function Logo({ className = "", variant = "light" }) {
+  const fileName = variant === "dark" ? "logo-dark.svg" : "logo.svg";
+  return <img className={className} src={`${ASSET}/${fileName}`} alt="Cuidary" />;
 }
 
 function Button({
@@ -544,13 +545,14 @@ function AutoCarousel({ items, type, label }) {
   );
 }
 
-function Header() {
+function Header({ theme = "dark" }) {
   const [open, setOpen] = useState(false);
+  const isLightBackground = theme === "light";
 
   return (
-    <header className="site-header">
+    <header className={`site-header${isLightBackground ? " site-header--light" : ""}`}>
       <a href="/#inicio" aria-label="Ir para o início">
-        <Logo className="header-logo" />
+        <Logo className="header-logo" variant={isLightBackground ? "dark" : "light"} />
       </a>
       <nav className={open ? "nav open" : "nav"} aria-label="Navegação principal">
         <a href="/#hospital" onClick={() => setOpen(false)}>Hospital</a>
@@ -1517,7 +1519,7 @@ function SeoLandingPage({ page }) {
   return (
     <>
       <section className="seo-page-hero">
-        <Header />
+        <Header theme="light" />
         <div className="container seo-page-hero-inner">
           <nav className="seo-breadcrumb" aria-label="Breadcrumb">
             <a href="/">Início</a><span>›</span><span>{page.h1}</span>
@@ -1566,7 +1568,7 @@ function TeamSeoPage({ page }) {
   return (
     <>
       <section className="seo-page-hero team-seo-hero">
-        <Header />
+        <Header theme="light" />
         <div className="container seo-page-hero-inner">
           <nav className="seo-breadcrumb" aria-label="Breadcrumb"><a href="/">Início</a><span>›</span><a href="/#equipe">Equipe</a><span>›</span><span>{page.name}</span></nav>
           <p className="eyebrow">Equipe Cuidary</p>
@@ -1648,31 +1650,9 @@ function FAQ() {
   );
 }
 
-function SeoDiscovery() {
-  const featuredPages = seoPages.slice(0, 8);
-  return (
-    <section className="seo-discovery">
-      <div className="container">
-        <p className="eyebrow">Informações úteis</p>
-        <h2>Saúde veterinária em Entre Rios de Minas</h2>
-        <p className="seo-discovery-intro">
-          Conteúdos diretos sobre atendimento, prevenção e serviços veterinários da Cuidary.
-        </p>
-        <div className="seo-discovery-grid">
-          {featuredPages.map((page) => (
-            <a href={`/${page.slug}`} key={page.slug}>
-              <strong>{page.h1}</strong>
-              <span>Ver informações</span>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Footer() {
   const [status, setStatus] = useState("");
+  const usefulPages = seoPages.slice(0, 8);
   const footerLinks = [
     ["Início", "/#inicio"],
     ["Hospital", "/#hospital"],
@@ -1698,6 +1678,25 @@ function Footer() {
 
   return (
     <footer className="footer">
+      <section className="footer-useful" aria-labelledby="footer-useful-title">
+        <div className="container">
+          <div className="footer-useful-heading">
+            <div>
+              <p className="eyebrow">Informações úteis</p>
+              <h2 id="footer-useful-title">Saúde veterinária em Entre Rios de Minas</h2>
+            </div>
+            <p>Conteúdos diretos sobre atendimento, prevenção e serviços veterinários da Cuidary.</p>
+          </div>
+          <nav className="footer-useful-links" aria-label="Informações úteis sobre saúde veterinária">
+            {usefulPages.map((page) => (
+              <a href={`/${page.slug}`} key={page.slug}>
+                <span>{page.h1}</span>
+                <span aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </nav>
+        </div>
+      </section>
       <div className="container footer-grid">
         <div className="footer-brand">
           <Logo className="footer-logo" />
@@ -1864,7 +1863,7 @@ export default function App() {
     <>
       <Hero />
       <main>
-        <Structure /><Services /><CareBanner /><Team /><Club /><Testimonials /><FAQ /><SeoDiscovery />
+        <Structure /><Services /><CareBanner /><Team /><Club /><Testimonials /><FAQ />
       </main>
       <Footer />
       <FloatingWhatsApp />
