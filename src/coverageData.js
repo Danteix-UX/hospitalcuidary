@@ -268,7 +268,7 @@ export const coverageCategories = [
     title: "Estética e bem-estar",
     description: "Banho, tosa e cuidados estéticos com desconto conforme o plano escolhido.",
     procedures: [
-      { name: "Transporte mensalista" },
+      { name: "Táxi pet" },
       { name: "Corte de unhas" },
       { name: "Banho" },
       { name: "Tosa higiênica" },
@@ -276,7 +276,7 @@ export const coverageCategories = [
       { name: "Tosa na máquina" },
       { name: "Hidratação simples" },
       { name: "Desembolar" },
-      { name: "Tosa de patinha" },
+      { name: "Tosa patinha" },
     ],
   },
 ];

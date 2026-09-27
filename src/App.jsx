@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   FaBuilding,
   FaBath,
-  FaCalendarCheck,
+  FaCarSide,
   FaCut,
   FaInstagram,
   FaMapMarkerAlt,
@@ -204,7 +204,9 @@ const planFeatures = [
   "Remoção de tártaro",
   "Telemedicina 24h",
   "Castração",
-  "Banho & Tosa",
+  "Banho",
+  "Tosa higiênica",
+  "Táxi pet",
   "Medicamentos",
 ];
 
@@ -319,11 +321,27 @@ const planComparisonRows = [
     },
   },
   {
-    label: "Banho e tosa",
+    label: "Banho",
     values: {
       Basic: { text: "10% OFF", tone: "discount" },
       Essencial: { text: "15% OFF", tone: "discount" },
-      Premium: { text: "4 banhos + 1 tosa/mês", tone: "premium" },
+      Premium: { text: "2 inclusos/mês", tone: "premium" },
+    },
+  },
+  {
+    label: "Tosa higiênica",
+    values: {
+      Basic: { text: "10% OFF", tone: "discount" },
+      Essencial: { text: "15% OFF", tone: "discount" },
+      Premium: { text: "1 inclusa/mês", tone: "premium" },
+    },
+  },
+  {
+    label: "Táxi pet",
+    values: {
+      Basic: { text: "10% OFF", tone: "discount" },
+      Essencial: { text: "15% OFF", tone: "discount" },
+      Premium: { text: "2 inclusos/mês", tone: "premium" },
     },
   },
   {
@@ -849,15 +867,16 @@ function PlanCard({ plan, billing }) {
           ? catPlanFeatures.map(([feature, benefit]) => (
               <li key={feature}><span>{feature}</span><small>{benefit}</small></li>
             ))
-          : planFeatures.map((feature, index) => {
+          : planFeatures.map((feature) => {
               let benefit = `${plan.procedureDiscount}% OFF`;
-              if (index === 0) benefit = "4 consultas inclusas";
-              if (index === 1) benefit = "Incluso";
-              if (index === 2) benefit = "3 vacinas inclusas";
-              if (plan.featured && index === 8) benefit = "Incluso";
-              if (plan.featured && index === 9) benefit = "Proced. + anestesia";
-              if (plan.featured && index === 10) benefit = "4 banhos/mês";
-              if (plan.featured && index === 11) benefit = "20% OFF";
+              if (feature === "Consulta") benefit = "4 consultas inclusas";
+              if (feature === "Urgência e Emergência 24h") benefit = "Incluso";
+              if (feature === "Vacinas V10, Raiva e Quíntupla") benefit = "3 vacinas inclusas";
+              if (plan.featured && feature === "Telemedicina 24h") benefit = "Incluso";
+              if (plan.featured && feature === "Castração") benefit = "Proced. + anestesia";
+              if (plan.featured && feature === "Banho") benefit = "2 por mês";
+              if (plan.featured && feature === "Tosa higiênica") benefit = "1 por mês";
+              if (plan.featured && feature === "Táxi pet") benefit = "2 por mês";
               return <li key={feature}><span>{feature}</span><small>{benefit}</small></li>;
             })}
       </ul>
@@ -1013,10 +1032,14 @@ function CoverageBenefit({ category, procedure, plan }) {
       : "45 dias";
 
   if (category.id === "estetica") {
-    const premiumIncluded = ["Transporte mensalista", "Corte de unhas", "Banho", "Tosa higiênica"].includes(procedure.name);
+    const premiumIncluded = ["Táxi pet", "Corte de unhas", "Banho", "Tosa higiênica"].includes(procedure.name);
     const catIncluded = ["Corte de unhas", "Banho"].includes(procedure.name);
     const includedAesthetic = plan.cat ? catIncluded : plan.shortName === "Premium" ? premiumIncluded : false;
-    const benefit = includedAesthetic ? "Incluso" : `${plan.procedureDiscount}% OFF`;
+    let benefit = includedAesthetic ? "Incluso" : `${plan.procedureDiscount}% OFF`;
+    if (includedAesthetic && procedure.name === "Táxi pet") benefit = "Incluso • 2 por mês";
+    if (includedAesthetic && procedure.name === "Banho") benefit = `Incluso • ${plan.cat ? 1 : 2} por mês`;
+    if (includedAesthetic && procedure.name === "Tosa higiênica") benefit = "Incluso • 1 por mês";
+    if (includedAesthetic && plan.cat && procedure.name === "Corte de unhas") benefit = "Incluso • 1 por mês";
     return (
       <tr>
         <td data-label="Serviço"><strong className="aesthetic-service-name">{procedure.name}</strong></td>
@@ -1179,7 +1202,7 @@ function CoveragePage({ initialPlanName = "Premium" }) {
         if (
           selectedPlan.cat &&
           category.id === "estetica" &&
-          ["Transporte mensalista", "Tosa higiênica", "Tosa na tesoura", "Desembolar", "Tosa de patinha", "Tosa na máquina"].includes(procedureName)
+          ["Táxi pet", "Tosa higiênica", "Tosa na tesoura", "Desembolar", "Tosa na máquina"].includes(procedureName)
         ) return false;
         const searchable =
           typeof procedure === "string"
@@ -1264,7 +1287,8 @@ function CoveragePage({ initialPlanName = "Premium" }) {
                     Quatro consultas generalistas, urgência, emergência, Raiva, V10 e
                     Quíntupla estão inclusas. Na castração, somente o procedimento e a
                     anestesia estão inclusos após 180 dias; internação e medicamentos têm
-                    20% de desconto.
+                    20% de desconto. Na estética, são 2 banhos, 1 tosa higiênica e 2
+                    táxis pet por mês.
                   </p>
                 ) : (
                   <p>
@@ -1295,7 +1319,7 @@ function CoveragePage({ initialPlanName = "Premium" }) {
                 <div className="premium-size-copy">
                   <span className="premium-label">Premium completo</span>
                   <h3>Qual é o porte do seu pet?</h3>
-                  <p>O Premium inclui <strong>4 banhos por mês</strong>. Por isso, o valor acompanha o porte do cão.</p>
+                  <p>O Premium inclui <strong>2 banhos por mês e 1 tosa higiênica</strong>. Por isso, o valor acompanha o porte do cão.</p>
                 </div>
                 <div className="pet-size-options" role="radiogroup" aria-label="Porte do pet">
                   {premiumSizeOptions.map((size) => (
@@ -1325,9 +1349,10 @@ function CoveragePage({ initialPlanName = "Premium" }) {
                     Seu pacote de estética
                   </strong>
                   <div className="premium-package-benefits">
-                    <span><FaBath aria-hidden="true" />4 banhos por mês</span>
+                    <span><FaBath aria-hidden="true" />2 banhos por mês</span>
+                    <span><FaCut aria-hidden="true" />1 tosa higiênica por mês</span>
+                    <span><FaCarSide aria-hidden="true" />2 táxis pet por mês</span>
                     <span><FaCut aria-hidden="true" />Corte de unhas incluso</span>
-                    <span><FaCalendarCheck aria-hidden="true" />Limpeza de ouvido inclusa</span>
                   </div>
                 </div>
               </div>

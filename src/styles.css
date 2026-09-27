@@ -2750,6 +2750,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  flex-wrap: wrap;
   gap: clamp(22px, 4vw, 64px);
 }
 
