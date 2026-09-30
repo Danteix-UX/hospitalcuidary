@@ -266,7 +266,7 @@ export const coverageCategories = [
   {
     id: "estetica",
     title: "Estética e bem-estar",
-    description: "Banho, tosa e cuidados estéticos com desconto conforme o plano escolhido.",
+    description: "Cuidados estéticos e serviços de bem-estar com benefício conforme o plano escolhido.",
     procedures: [
       { name: "Táxi pet" },
       { name: "Corte de unhas" },
