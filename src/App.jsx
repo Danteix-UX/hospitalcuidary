@@ -188,8 +188,6 @@ const catPlanFeatures = [
   ["Vacinas felinas + Raiva", "Incluso"],
   ["Castração", "Proced. + anestesia"],
   ["Telemedicina 24h", "Incluso"],
-  ["Banho", "1 por mês"],
-  ["Corte de unhas", "1 por mês"],
   ["Demais procedimentos", "20% OFF"],
 ];
 
@@ -1033,13 +1031,11 @@ function CoverageBenefit({ category, procedure, plan }) {
 
   if (category.id === "estetica") {
     const premiumIncluded = ["Táxi pet", "Corte de unhas", "Banho", "Tosa higiênica"].includes(procedure.name);
-    const catIncluded = ["Corte de unhas", "Banho"].includes(procedure.name);
-    const includedAesthetic = plan.cat ? catIncluded : plan.shortName === "Premium" ? premiumIncluded : false;
+    const includedAesthetic = !plan.cat && plan.shortName === "Premium" && premiumIncluded;
     let benefit = includedAesthetic ? "Incluso" : `${plan.procedureDiscount}% OFF`;
     if (includedAesthetic && procedure.name === "Táxi pet") benefit = "Incluso • 2 por mês";
-    if (includedAesthetic && procedure.name === "Banho") benefit = `Incluso • ${plan.cat ? 1 : 2} por mês`;
+    if (includedAesthetic && procedure.name === "Banho") benefit = "Incluso • 2 por mês";
     if (includedAesthetic && procedure.name === "Tosa higiênica") benefit = "Incluso • 1 por mês";
-    if (includedAesthetic && plan.cat && procedure.name === "Corte de unhas") benefit = "Incluso • 1 por mês";
     return (
       <tr>
         <td data-label="Serviço"><strong className="aesthetic-service-name">{procedure.name}</strong></td>
@@ -1202,7 +1198,7 @@ function CoveragePage({ initialPlanName = "Premium" }) {
         if (
           selectedPlan.cat &&
           category.id === "estetica" &&
-          ["Táxi pet", "Tosa higiênica", "Tosa na tesoura", "Desembolar", "Tosa na máquina"].includes(procedureName)
+          ["Táxi pet", "Corte de unhas", "Banho", "Tosa higiênica", "Tosa na tesoura", "Desembolar", "Tosa na máquina"].includes(procedureName)
         ) return false;
         const searchable =
           typeof procedure === "string"
@@ -1281,7 +1277,7 @@ function CoveragePage({ initialPlanName = "Premium" }) {
                 <span className="coverage-plan-kicker">Você está conferindo</span>
                 <h3>{selectedPlan.name}</h3>
                 {selectedPlan.cat ? (
-                  <p>Quatro consultas generalistas, urgência, emergência e vacinas felinas estão inclusas. Banho mensal e corte de unhas também estão inclusos; os demais procedimentos têm 20% de desconto.</p>
+                  <p>Quatro consultas generalistas, urgência, emergência e vacinas felinas estão inclusas. Castração e telemedicina seguem as condições do Cat Premium; os demais procedimentos têm 20% de desconto.</p>
                 ) : selectedPlan.shortName === "Premium" ? (
                   <p>
                     Quatro consultas generalistas, urgência, emergência, Raiva, V10 e
@@ -1374,16 +1370,6 @@ function CoveragePage({ initialPlanName = "Premium" }) {
                       <img src={`${ASSET}/pet-size-cat.png`} alt="" />
                     </span>
                     <span className="pet-size-selected visible" aria-hidden="true">✓</span>
-                  </div>
-                </div>
-                <div className="premium-package-note">
-                  <strong className="premium-package-title">
-                    <img src={`${ASSET}/brand-heart.svg`} alt="" />
-                    Seu pacote de estética
-                  </strong>
-                  <div className="premium-package-benefits">
-                    <span><FaBath aria-hidden="true" />1 banho por mês</span>
-                    <span><FaCut aria-hidden="true" />1 corte de unhas</span>
                   </div>
                 </div>
               </div>
